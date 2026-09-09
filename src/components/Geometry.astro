@@ -1,0 +1,16 @@
+---
+const {id='hero-shape'}=Astro.props;
+---
+<div class="geometry" aria-hidden="true">
+  <div class="geometry-axis axis-x"></div><div class="geometry-axis axis-y"></div>
+  <svg viewBox="0 0 400 400" class="geometry-svg">
+    <g class="geometry-grid" fill="none" stroke="currentColor" stroke-width="1">
+      <circle cx="200" cy="200" r="164" opacity=".22"/><path d="M36 200H364M200 36V364" opacity=".22"/>
+      {[0,1,2,3,4,5,6].map(i=><rect class="geometry-plane" x={80+i*13} y={80+i*13} width={174-i*7} height={174-i*7} rx="0" />)}
+    </g>
+    <path id={id} class="morph-shape" d="M200 75 L325 200 L200 325 L75 200 Z" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <path class="morph-target" d="M80 80 L320 80 L320 320 L80 320 Z" fill="none" stroke="none"/>
+    <circle class="orbit-dot" cx="200" cy="36" r="5" fill="var(--accent)"/>
+  </svg>
+  <span class="geo-coordinate mono">X / LOGIC</span><span class="geo-caption mono">Y / INTUITION</span><span class="geo-plus">+</span>
+</div>

@@ -1,0 +1,22 @@
+---
+import Site from '../layouts/Site.astro';
+import Geometry from '../components/Geometry.astro';
+import SelectedWork from '../components/SelectedWork.astro';
+import Process from '../components/Process.astro';
+import Profile from '../components/Profile.astro';
+import ArchivePreview from '../components/ArchivePreview.astro';
+---
+<Site>
+  <section class="hero section-shell" id="intro">
+    <div class="hero-eyebrow mono"><span><i class="status-dot"></i> FULL-STACK / AI ENGINEER</span><span>BASED IN TAIWAN — 2026</span></div>
+    <div class="hero-grid">
+      <div class="hero-heading"><h1><span class="hero-line">Ideas into</span><span class="hero-line">systems<span class="accent">.</span></span></h1><div class="hero-chinese"><span class="small-cross" aria-hidden="true">↳</span><div><h2>從需求到上線，<br />打造能持續運作的產品。</h2><p>全端開發、雲端系統與 AI 應用。<br />讓技術回應需求，讓想法真正落地。</p></div></div></div>
+      <aside class="hero-aside"><div class="identity"><p>余程漢</p><span class="mono">CHENG-HAN YU</span><span>Software engineer.<br />Researcher. Maker.</span></div><Geometry /></aside>
+    </div>
+    <div class="hero-bottom mono"><span>LOGIC, WITH A HUMAN PERSPECTIVE.</span><a href="#work" class="text-link">探索作品 <span aria-hidden="true">↓</span></a></div>
+  </section>
+  <SelectedWork />
+  <Process />
+  <Profile />
+  <ArchivePreview />
+</Site>

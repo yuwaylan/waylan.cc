@@ -1,0 +1,10 @@
+---
+export const prerender=false;
+import Admin from '../../layouts/Admin.astro';
+import {authConfigured} from '../../lib/env';
+import {adminSession,localRequest,noCache} from '../../lib/auth';
+noCache(Astro);
+if(adminSession(Astro.cookies))return Astro.redirect('/admin/');
+const local=localRequest(Astro),configured=authConfigured();
+---
+<Admin title="管理者登入" login><section class="admin-login"><span class="mono accent">OWNER ACCESS ONLY</span><h1>只給管理者的<br />另一個視角<span class="accent">。</span></h1><p>查看網站的瀏覽趨勢、熱門作品與來訪 IP。</p>{Astro.url.searchParams.has('error')&&<p class="notice error" role="alert">登入未完成，或這個 GitHub 帳號沒有管理權限。請重新登入。</p>}{configured?<a class="admin-primary" href="/api/auth/login">使用 GitHub 登入 ↗</a>:<p class="notice">GitHub 管理者登入尚未啟用。完成部署環境設定後即可使用。</p>}{local&&<div class="local-login"><p class="mono">LOCAL DEVELOPMENT</p><p>本機開發預覽。紀錄儲存在此電腦，部署環境不提供這個入口。</p><form action="/api/auth/local" method="post"><button class="admin-primary">進入本機後台 →</button></form></div>}<a class="text-link" href="/">← 返回個人網站</a></section></Admin>

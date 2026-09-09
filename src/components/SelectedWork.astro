@@ -1,0 +1,10 @@
+---
+import {featured,projects} from '../data/projects';
+import ProjectVisual from './ProjectVisual.astro';
+---
+<section class="section-shell work-section" id="work">
+ <div class="section-kicker mono"><span>01 / SELECTED WORK</span><span>ENGINEERING IN PRACTICE</span></div>
+ <div class="section-heading" data-reveal><h2>把想法，<br /><span class="muted">做成解法。</span></h2><p>從產品架構到模型實驗，<br />在不同尺度上，解決具體的問題。</p></div>
+ <div class="projects-grid">{featured.map((p,i)=><article class:list={['project',i%2===1&&'project-offset']} data-reveal><a class="project-image-link" href={`/work/${p.slug}/`} aria-label={`閱讀 ${p.title} 專案`}><ProjectVisual kind={p.slug} /><span class="image-link-arrow" aria-hidden="true">↗</span></a><div class="project-meta mono"><span>{String(i+1).padStart(2,'0')} / {p.category}</span><span>{p.year}</span></div><a class="project-title" href={`/work/${p.slug}/`}><h3>{p.title}</h3><span>↗</span></a><p class="project-subtitle">{p.subtitle}</p><p class="project-summary">{p.summary}</p><p class="stack-line mono">{p.stack.slice(0,4).join(' / ')}</p></article>)}</div>
+ <div class="more-projects"><span class="mono muted">ALSO EXPLORING</span>{projects.filter(p=>!p.archive).slice(4).map(p=><a href={`/work/${p.slug}/`}><span>{p.title}</span><span class="mono">{p.year} ↗</span></a>)}</div>
+</section>

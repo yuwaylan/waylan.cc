@@ -1,0 +1,14 @@
+---
+import Site from '../../layouts/Site.astro';
+import ProjectVisual from '../../components/ProjectVisual.astro';
+import {projects,type Project} from '../../data/projects';
+export function getStaticPaths(){return projects.map(project=>({params:{slug:project.slug},props:{project}}));}
+const {project:p}=Astro.props as {project:Project};
+const next=projects[(projects.findIndex(x=>x.slug===p.slug)+1)%projects.length];
+---
+<Site title={`${p.title} — 余程漢 Cheng-Han Yu`} description={p.summary}>
+ <div class="section-shell"><header class="page-heading"><a class="breadcrumb mono" href={p.archive?'/archive/':'/#work'}>← {p.archive?'ARCHIVE':'SELECTED WORK'}</a><div class="section-kicker mono"><span>{p.category}</span><span>{p.year}</span></div><h1 data-reveal>{p.title}<span class="accent">.</span></h1><p class="lead">{p.subtitle}</p><dl class="case-meta"><div><dt>PERIOD</dt><dd>{p.year}</dd></div><div><dt>MY ROLE</dt><dd>{p.role}</dd></div><div><dt>TOOLS</dt><dd>{p.stack.join(' / ')}</dd></div></dl></header>
+ <figure class="case-visual">{p.image?<img src={`/images/${p.image}.webp`} alt={`${p.title}作品畫面`} width="1000" height="650" />:<ProjectVisual kind={['be-water','nlp-assistant','certification-system','skin-texture'].includes(p.slug)?p.slug:'certification-system'} />}</figure>
+ <div class="case-body"><section class="case-section" data-reveal><h2>01 / 專案背景</h2><p>{p.context}</p></section><section class="case-section" data-reveal><h2>02 / 我的工作</h2><ol class="contribution-list">{p.contributions.map(c=><li>{c}</li>)}</ol></section>{p.diagram&&<section class="case-section" data-reveal><h2>03 / 技術脈絡</h2><div><div class="flow-diagram">{p.diagram.map((d,i)=><div><span class="mono">0{i+1}</span><span>{d}</span></div>)}</div><p class="case-note">依專案資料整理的流程示意。</p></div></section>}<section class="case-section" data-reveal><h2>{p.diagram?'04':'03'} / 成果</h2><div><p>{p.outcome}</p>{p.award&&<p class="case-note accent">{p.award}</p>}</div></section>{p.archive&&<p class="case-note muted">收錄自 2016–2019 個人作品集。團隊作品僅列出本人參與的工作；當年的平台上架紀錄不代表目前仍提供下載。</p>}</div>
+ <nav class="case-next" aria-label="下一個作品"><a href={`/work/${next.slug}/`}><span class="mono">NEXT PROJECT</span><h2>{next.title}</h2></a><a href={`/work/${next.slug}/`} aria-label={`下一個作品：${next.title}`}>↗</a></nav></div>
+</Site>

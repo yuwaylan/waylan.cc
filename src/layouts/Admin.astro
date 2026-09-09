@@ -1,0 +1,8 @@
+---
+import '../styles/global.css';
+import '../styles/admin.css';
+import '@fontsource-variable/ibm-plex-sans';
+import '@fontsource/ibm-plex-mono/400.css';
+const {title='訪客統計',login=false,user=''}=Astro.props;
+---
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><meta name="referrer" content="no-referrer"/><meta name="theme-color" content="#f7f7f5"/><title>{title} — waylan.cc</title><link rel="icon" href="/favicon.svg"/></head><body class="admin-body"><a class="skip-link" href="#main">跳至主要內容</a><header class="admin-header"><a class="wordmark" href="/">waylan<span class="accent">.</span>cc</a><span class="mono">PRIVATE / ANALYTICS</span><div>{!login&&<><span class="admin-user mono">{user}</span><form method="post" action="/api/auth/logout"><button>登出 ↗</button></form></>}<a href="/">查看網站 ↗</a></div></header><main id="main"><slot /></main></body></html>
