@@ -1,0 +1,25 @@
+<figure class="architecture" aria-label="Be水水系統架構示意">
+  <div class="architecture-clients">
+    <span>顧客端</span>
+    <span>技師端</span>
+    <span>管理後台</span>
+  </div>
+  <svg class="architecture-lines" viewBox="0 0 540 100" aria-hidden="true">
+    <g fill="none" stroke="currentColor" stroke-width="1.5">
+      <path class="connection" d="M90 0V40Q90 50 100 50H260Q270 50 270 60V100" />
+      <path class="connection" d="M270 0V100" />
+      <path class="connection" d="M450 0V40Q450 50 440 50H280Q270 50 270 60V100" />
+    </g>
+    <circle class="connection-dot" cx="270" cy="50" r="5" />
+  </svg>
+  <div class="architecture-layer api-layer">
+    <strong>Laravel API</strong>
+    <span>Vue.js / Flutter</span>
+  </div>
+  <div class="architecture-connector" aria-hidden="true"></div>
+  <div class="architecture-layer data-layer">
+    <strong>MySQL / Redis</strong>
+    <span>資料與快取</span>
+  </div>
+  <figcaption>依專案資料整理的架構示意</figcaption>
+</figure>

@@ -1,0 +1,8 @@
+assets/
+public/images/
+node_modules/
+dist/
+.vercel/
+.astro/
+.local/
+package-lock.json

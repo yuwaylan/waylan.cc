@@ -1,4 +1,4 @@
-export const recordSQL=`WITH quota AS (
+export const recordSQL = `WITH quota AS (
  INSERT INTO visit_limits (key,bucket,count) VALUES ($1,$6,1)
  ON CONFLICT (key,bucket) DO UPDATE SET count=visit_limits.count+1 WHERE visit_limits.count < 60
  RETURNING count

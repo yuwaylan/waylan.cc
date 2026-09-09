@@ -1,9 +1,163 @@
 ---
-export const prerender=false;
+export const prerender = false;
 import Admin from '../../layouts/Admin.astro';
-import {adminSession,noCache} from '../../lib/auth';
-import {localMode,retentionDays} from '../../lib/env';
-import {projects} from '../../data/projects';
-noCache(Astro);const session=adminSession(Astro.cookies);if(!session)return Astro.redirect('/admin/login/');
+import { adminSession, noCache } from '../../lib/auth';
+import { localMode, retentionDays } from '../../lib/env';
+import { projects } from '../../data/projects';
+noCache(Astro);
+const session = adminSession(Astro.cookies);
+if (!session) return Astro.redirect('/admin/login/');
 ---
-<Admin user={session.login}><div class="admin-shell"><div class="admin-title"><div><p class="mono accent">01 / TRAFFIC OVERVIEW</p><h1>每一次造訪。</h1></div><p class="mono">{localMode()?'LOCAL DATABASE':'PRIVATE DASHBOARD'}<br />ASIA / TAIPEI · {retentionDays()} DAYS RETENTION</p></div><form id="filters" class="admin-filters"><label>期間<select name="days"><option value="1">最近 24 小時</option><option value="7" selected>最近 7 天</option><option value="30">最近 30 天</option></select></label><label class="ip-filter">查詢 IP<input name="ip" placeholder="完整 IPv4 / IPv6" autocomplete="off" spellcheck="false" maxlength="45"/></label><label>頁面<select name="path"><option value="">所有頁面</option><option value="/">首頁</option><option value="/archive/">Archive</option>{projects.map(p=><option value={`/work/${p.slug}/`}>{p.title}</option>)}</select></label><button class="admin-primary" type="submit">套用篩選 ↗</button><button class="admin-reset" type="reset">重設</button></form><p id="dashboard-status" role="status" class="dashboard-status">正在載入訪客紀錄…</p><div class="metrics" aria-label="訪客統計摘要"><div><span class="mono">PAGE VIEWS</span><strong id="metric-views">—</strong><span>有效瀏覽</span></div><div><span class="mono">UNIQUE IPs</span><strong id="metric-visitors">—</strong><span>不同 IP</span></div><div><span class="mono">PAGES VISITED</span><strong id="metric-pages">—</strong><span>被造訪頁面</span></div></div><div class="dashboard-grid"><section class="trend-panel"><div class="panel-heading"><h2>每日造訪</h2><span class="mono">PAGE VIEWS / TAIPEI</span></div><div id="trend" class="trend" aria-label="每日瀏覽次數"></div><div class="chart-legend"><span><i></i>有效瀏覽次數</span><span class="muted">同一 IP、同頁每分鐘合併一次</span></div></section><section class="top-panel"><div class="panel-heading"><h2>熱門頁面</h2><span class="mono">TOP 10</span></div><ol id="top-pages" class="rank-list"><li class="muted">等待資料</li></ol></section></div><section class="visits-panel" id="visits"><div class="panel-heading"><h2>來訪紀錄</h2><span class="mono">LATEST FIRST / 25 PER PAGE</span></div><p class="table-hint">點選 IP 可篩選該位址的紀錄。共用網路、VPN 與動態 IP 可能影響辨識，IP 數不等於人數。</p><div class="table-scroll" tabindex="0" aria-label="訪客紀錄表格，可左右捲動"><table><thead><tr><th scope="col">造訪時間</th><th scope="col">IP 位址</th><th scope="col">頁面</th><th scope="col">來源網域</th><th scope="col">國家 / 地區</th></tr></thead><tbody id="visit-rows"><tr><td colspan="5">載入中…</td></tr></tbody></table></div><div class="pagination"><span id="page-status" class="mono">PAGE —</span><div><button id="previous-page" disabled>← 上一頁</button><button id="next-page" disabled>下一頁 →</button></div></div></section><section class="sources-panel"><div class="panel-heading"><h2>來源網站</h2><span class="mono">REFERRER HOST ONLY</span></div><ol id="sources" class="rank-list"></ol></section><p class="admin-footnote">訪問紀錄僅限管理者查看。停用統計、瀏覽器隱私設定或封鎖腳本的瀏覽不會被列入；此面板不代表所有 HTTP 請求。</p></div><script>import '../../scripts/admin';</script></Admin>
+
+<Admin user={session.login}>
+  <div class="admin-shell">
+    <div class="admin-title">
+      <div>
+        <p class="mono accent">01 / TRAFFIC OVERVIEW</p>
+        <h1>每一次造訪。</h1>
+      </div>
+      <p class="mono">
+        {localMode() ? 'LOCAL DATABASE' : 'PRIVATE DASHBOARD'}
+        <br />
+        ASIA / TAIPEI · {retentionDays()} DAYS RETENTION
+      </p>
+    </div>
+    <form id="filters" class="admin-filters">
+      <label>
+        期間
+        <select name="days">
+          <option value="1">最近 24 小時</option>
+          <option value="7" selected>
+            最近 7 天
+          </option>
+          <option value="30">最近 30 天</option>
+        </select>
+      </label>
+      <label class="ip-filter">
+        查詢 IP
+        <input
+          name="ip"
+          placeholder="完整 IPv4 / IPv6"
+          autocomplete="off"
+          spellcheck="false"
+          maxlength="45"
+        />
+      </label>
+      <label>
+        頁面
+        <select name="path">
+          <option value="">所有頁面</option>
+          <option value="/">首頁</option>
+          <option value="/archive/">Archive</option>
+          {projects.map((p) => (
+            <option value={`/work/${p.slug}/`}>{p.title}</option>
+          ))}
+        </select>
+      </label>
+      <button class="admin-primary" type="submit">
+        套用篩選 ↗
+      </button>
+      <button class="admin-reset" type="reset">
+        重設
+      </button>
+    </form>
+    <p id="dashboard-status" role="status" class="dashboard-status">
+      正在載入訪客紀錄…
+    </p>
+    <div class="metrics" aria-label="訪客統計摘要">
+      <div>
+        <span class="mono">PAGE VIEWS</span>
+        <strong id="metric-views">—</strong>
+        <span>有效瀏覽</span>
+      </div>
+      <div>
+        <span class="mono">UNIQUE IPs</span>
+        <strong id="metric-visitors">—</strong>
+        <span>不同 IP</span>
+      </div>
+      <div>
+        <span class="mono">PAGES VISITED</span>
+        <strong id="metric-pages">—</strong>
+        <span>被造訪頁面</span>
+      </div>
+    </div>
+    <div class="dashboard-grid">
+      <section class="trend-panel">
+        <div class="panel-heading">
+          <h2>每日造訪</h2>
+          <span class="mono">PAGE VIEWS / TAIPEI</span>
+        </div>
+        <div id="trend" class="trend" aria-label="每日瀏覽次數"></div>
+        <div class="chart-legend">
+          <span>
+            <i></i>有效瀏覽次數
+          </span>
+          <span class="muted">同一 IP、同頁每分鐘合併一次</span>
+        </div>
+      </section>
+      <section class="top-panel">
+        <div class="panel-heading">
+          <h2>熱門頁面</h2>
+          <span class="mono">TOP 10</span>
+        </div>
+        <ol id="top-pages" class="rank-list">
+          <li class="muted">等待資料</li>
+        </ol>
+      </section>
+    </div>
+    <section class="visits-panel" id="visits">
+      <div class="panel-heading">
+        <h2>來訪紀錄</h2>
+        <span class="mono">LATEST FIRST / 25 PER PAGE</span>
+      </div>
+      <p class="table-hint">
+        點選 IP 可篩選該位址的紀錄。共用網路、VPN 與動態 IP 可能影響辨識，IP 數不等於人數。
+      </p>
+      <div class="table-scroll" tabindex="0" aria-label="訪客紀錄表格，可左右捲動">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">造訪時間</th>
+              <th scope="col">IP 位址</th>
+              <th scope="col">頁面</th>
+              <th scope="col">來源網域</th>
+              <th scope="col">國家 / 地區</th>
+            </tr>
+          </thead>
+          <tbody id="visit-rows">
+            <tr>
+              <td colspan="5">載入中…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span id="page-status" class="mono">
+          PAGE —
+        </span>
+        <div>
+          <button id="previous-page" disabled>
+            ← 上一頁
+          </button>
+          <button id="next-page" disabled>
+            下一頁 →
+          </button>
+        </div>
+      </div>
+    </section>
+    <section class="sources-panel">
+      <div class="panel-heading">
+        <h2>來源網站</h2>
+        <span class="mono">REFERRER HOST ONLY</span>
+      </div>
+      <ol id="sources" class="rank-list"></ol>
+    </section>
+    <p class="admin-footnote">
+      訪問紀錄僅限管理者查看。停用統計、瀏覽器隱私設定或封鎖腳本的瀏覽不會被列入；此面板不代表所有
+      HTTP 請求。
+    </p>
+  </div>
+  <script>
+    import '../../scripts/admin';
+  </script>
+</Admin>

@@ -1,9 +1,0 @@
----
-const {kind='be-water'}=Astro.props;
-const nodes=kind==='be-water'?['顧客端','技師端','管理後台']:kind==='nlp-assistant'?['MESSAGE','CONTEXT','RESPONSE']:kind==='certification-system'?['資訊','報名','管理']:['INPUT','MODEL','ANALYSIS'];
----
-<div class:list={['project-visual',`visual-${kind}`]} aria-hidden="true">
-  <span class="visual-label mono">{kind==='skin-texture'?'FIG. 04 / VISION PIPELINE':kind==='nlp-assistant'?'FIG. 02 / LANGUAGE INTERFACE':kind==='certification-system'?'FIG. 03 / REGISTRATION FLOW':'FIG. 01 / PRODUCT ECOSYSTEM'}</span>
-  {kind==='be-water'?<div class="system-visual"><div class="system-core">Be<span>水水</span><small>ONE CONNECTED SYSTEM</small></div><div class="system-nodes">{nodes.map((n,i)=><div class="system-node"><span class="mono">0{i+1}</span>{n}</div>)}</div><div class="system-layer mono">API / DATA / INFRASTRUCTURE</div></div>:kind==='nlp-assistant'?<div class="language-visual"><span class="language-bracket">&#123;</span><div><div class="mono">INPUT → UNDERSTANDING</div><strong>你好，<br />世界<span class="accent">。</span></strong><div class="language-cursor"></div></div><span class="language-bracket close">&#125;</span></div>:kind==='certification-system'?<div class="registration-visual">{nodes.map((n,i)=><div class="registration-step"><span class="mono">0{i+1}</span><strong>{n}</strong><span>↗</span></div>)}</div>:<div class="vision-visual"><div class="vision-grid">{Array.from({length:64},(_,i)=><span style={`--cell:${(Math.sin(i*1.3)+1)/2}`} />)}</div><div class="vision-scan"></div><span class="mono">FEATURE → PATTERN</span></div>}
-  <span class="visual-footnote mono">概念示意 / 非產品截圖</span>
-</div>
