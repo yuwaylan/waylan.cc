@@ -1,0 +1,58 @@
+---
+import type { Media } from '../data/media';
+interface Props {
+  id: string;
+  items: Media[];
+  single?: boolean;
+}
+const { id, items, single = false } = Astro.props;
+---
+
+<div class:list={['media-gallery', { 'gallery-single': single }]} data-gallery>
+  <div class="gallery-controls" role="group" aria-label="選擇展示畫面" hidden>
+    {items.map((item, i) => (
+      <button
+        type="button"
+        data-gallery-select={i}
+        aria-pressed={i === 0 ? 'true' : 'false'}
+        aria-controls={`${id}-track`}
+      >
+        {item.title}
+      </button>
+    ))}
+  </div>
+  <div
+    class="gallery-track"
+    id={`${id}-track`}
+    tabindex="0"
+    role="region"
+    aria-label="作品畫面，可橫向滑動"
+  >
+    {items.map((item) => (
+      <figure class="gallery-item">
+        <a
+          class="screen-image"
+          data-crop={item.height < item.width ? true : undefined}
+          href={`/images/${item.src}.webp`}
+          data-lightbox
+          data-caption={`${item.title}。${item.description}`}
+          aria-label={`放大${item.title}`}
+        >
+          <img
+            src={`/images/${item.src}.webp`}
+            alt={item.title}
+            width={item.width}
+            height={item.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+        <figcaption>
+          <strong>{item.title}</strong>
+          <span>{item.description}</span>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+  <p class="image-instruction">點擊畫面可放大查看</p>
+</div>

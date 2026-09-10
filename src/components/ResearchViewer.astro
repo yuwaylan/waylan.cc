@@ -1,0 +1,51 @@
+---
+import { skinStages } from '../data/media';
+const { id = 'skin' } = Astro.props;
+---
+
+<div class="research-viewer" data-research>
+  <div class="research-controls" role="group" aria-label="選擇研究階段" hidden>
+    {skinStages.map((stage, i) => (
+      <button
+        type="button"
+        data-stage={i}
+        aria-pressed={i === 0 ? 'true' : 'false'}
+        aria-controls={`${id}-panels`}
+      >
+        {stage.title}
+      </button>
+    ))}
+  </div>
+  <div id={`${id}-panels`} class="research-panels">
+    {skinStages.map((stage, i) => (
+      <figure data-stage-panel={i}>
+        <a
+          href={`/images/${stage.src}.webp`}
+          data-lightbox
+          data-caption={`${stage.title}：${stage.description}`}
+          aria-label={`放大${stage.title}`}
+        >
+          <img
+            src={`/images/${stage.src}.webp`}
+            alt={stage.title}
+            width="478"
+            height="478"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+        <figcaption>
+          <strong>{stage.title}</strong> {stage.description}
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+  <a
+    class="inline-link"
+    href="/images/skin-results.webp"
+    data-lightbox
+    data-caption="碩士論文圖 4-12：原始影像、模型預測、輪廓與疊圖。"
+  >
+    查看完整四圖比較 ↗
+  </a>
+</div>

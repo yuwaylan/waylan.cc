@@ -605,18 +605,6 @@ figure {
   display: inline-flex;
   align-items: center;
 }
-.motion-toggle {
-  border: 0;
-  background: none;
-  font: inherit;
-  padding: 0;
-}
-.motion-toggle:hover {
-  color: var(--accent);
-}
-.motion-off * {
-  scroll-behavior: auto !important;
-}
 .page-heading {
   padding-top: 35px;
   padding-bottom: 35px;

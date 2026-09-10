@@ -1,10 +1,11 @@
 ---
 import '../styles/global.css';
+import '../styles/portfolio.css';
 import '@fontsource-variable/ibm-plex-sans';
 import '@fontsource/ibm-plex-mono/400.css';
 const {
   title = '余程漢 Cheng-Han Yu — Full-stack & AI Engineer',
-  description = '余程漢的個人網站。專注全端開發、雲端系統與 AI 應用，從需求分析、系統設計到正式環境維運。',
+  description = '余程漢的個人網站。Be水水共同創辦人暨 CTO、系統工程師。收錄 Web 與 App 開發、系統維運、影像研究與早期作品。',
   privatePage = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -15,7 +16,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f7f7f5" />
+    <meta name="theme-color" content="#f7f5f1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {privatePage ? (
@@ -44,8 +45,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <nav aria-label="主要導覽" id="navigation">
         <a href="/#intro">介紹</a>
         <a href="/#experience">經歷</a>
-        <a href="/#work">專案</a>
+        <a href="/#work">Be水水</a>
         <a href="/#research">研究</a>
+        <a href="/#other">其他專案</a>
+        <a href="/#early-work">早期作品</a>
         <a href="/#education">學歷</a>
       </nav>
       <a
@@ -75,12 +78,34 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <div class="footer-bottom">
         <span>© {new Date().getFullYear()} waylan.cc</span>
         <a href="/privacy/">隱私說明</a>
-        <button class="motion-toggle" aria-pressed="false">
-          動態效果：開啟
-        </button>
         <a href="#main">回到頂端 ↑</a>
       </div>
     </footer>
+    <dialog class="image-dialog" aria-labelledby="image-dialog-caption">
+      <div class="image-dialog-toolbar">
+        <p id="image-dialog-caption"></p>
+        <button type="button" data-image-close>
+          關閉 ×
+        </button>
+      </div>
+      <div class="image-dialog-canvas">
+        <img alt="" />
+      </div>
+      <div class="image-dialog-actions">
+        <button type="button" data-image-prev>
+          ← 上一張
+        </button>
+        <button type="button" data-image-zoom aria-pressed="false">
+          原始尺寸
+        </button>
+        <a data-image-original target="_blank" rel="noopener noreferrer">
+          另開圖片 ↗
+        </a>
+        <button type="button" data-image-next>
+          下一張 →
+        </button>
+      </div>
+    </dialog>
     <script>
       import '../scripts/site';
     </script>

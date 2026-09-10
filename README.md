@@ -1,11 +1,11 @@
 # waylan.cc
 
-余程漢的個人履歷與作品網站。首頁依自我介紹、工作經歷、Be水水、來上客／族語 E 樂園、其他開發專案、研究、早期作品、學歷與證照排列。
+余程漢的個人履歷與作品網站。首頁依自我介紹、工作經歷、Be水水、研究與發表、其他開發專案、早期作品、學歷與證照排列。
 
 ## 技術架構
 
 - Astro 7 + TypeScript，自訂響應式 CSS。
-- Anime.js 4：架構連線、圖片視差、輕量進場與動態開關；尊重系統減少動態效果設定。
+- Anime.js 4：架構連線、滾動視差、章節進度與圖片切換；預設啟用且無頁面開關，尊重系統減少動態效果設定。
 - 公開頁面在建置時生成靜態 HTML，由 Vercel CDN 提供。
 - 後台與 API 使用 Vercel Functions（Node.js 24）。
 - Neon PostgreSQL 儲存訪問紀錄；本機可選用 PGlite。
@@ -50,6 +50,11 @@ Smoke checks 會在本機建立測試造訪紀錄，不會對正式站點執行�
 - `src/pages/index.astro`：首頁、自介、工作經歷、學歷與首頁順序。
 - `src/data/projects.ts`：專案名稱、本人角色、期間、工作內容與成果。
 - `src/pages/work/[slug].astro`：共用專案詳頁。
+- `src/data/media.ts`：App 與研究圖的標題、尺寸和說明。
+- `src/components/MediaGallery.astro`、`ResearchViewer.astro`：圖片展示與研究比較。
+- `src/scripts/gallery.ts`：滑動相簿、研究切換與圖片放大。
+- `src/styles/portfolio.css`：作品版面與滾動效果。
+- `docs/PORTFOLIO.md`：內容順序、來源及圖片處理紀錄。
 - `src/components/Architecture.astro`：Be水水系統架構示意。
 - `src/scripts/site.ts`：互動、導覽與訪問統計呼叫。
 - `src/styles/global.css`：前台排版與響應式規格。

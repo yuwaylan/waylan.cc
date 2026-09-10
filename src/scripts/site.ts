@@ -1,3 +1,4 @@
+import './gallery';
 import { animate, onScroll, svg, stagger } from 'animejs';
 const menu = document.querySelector<HTMLButtonElement>('.menu-toggle');
 const nav = document.querySelector<HTMLElement>('#navigation');
@@ -23,23 +24,12 @@ document.addEventListener('click', (e) => {
 });
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const small = matchMedia('(max-width: 600px)');
-let preference: string | null = null;
-try {
-  preference = localStorage.getItem('waylan-motion');
-} catch {}
-const toggle = document.querySelector<HTMLButtonElement>('.motion-toggle');
 let stopMotion = () => {};
 function setupMotion() {
   stopMotion();
-  const enabled = preference !== 'off' && !reduced.matches;
-  document.documentElement.classList.toggle('motion-off', !enabled);
-  if (toggle) {
-    toggle.textContent = `動態效果：${enabled ? '開啟' : '關閉'}`;
-    toggle.setAttribute('aria-pressed', String(!enabled));
-    toggle.disabled = reduced.matches;
-    toggle.title = reduced.matches ? '依照系統的減少動態效果設定關閉' : '';
-  }
-  if (!enabled) return;
+  document.documentElement.classList.toggle('motion-reduced', reduced.matches);
+  document.dispatchEvent(new Event('waylan:motion-change'));
+  if (reduced.matches) return;
   const running: { revert: () => unknown }[] = [];
   const keep = <T extends { revert: () => unknown }>(animation: T) => {
     running.push(animation);
@@ -52,8 +42,8 @@ function setupMotion() {
         if (entry.isIntersecting) {
           keep(
             animate(entry.target, {
-              y: [small.matches ? 8 : 12, 0],
-              duration: 500,
+              y: [small.matches ? 18 : 30, 0],
+              duration: 700,
               ease: 'outCubic',
             }),
           );
@@ -70,10 +60,77 @@ function setupMotion() {
     );
     keep(
       animate(el, {
-        y: [small.matches ? -5 : -12, small.matches ? 5 : 12],
-        scale: 1.08,
+        y: [small.matches ? -10 : -24, small.matches ? 10 : 24],
+        scale: 1.14,
         ease: 'linear',
         autoplay: scroll,
+      }),
+    );
+  });
+  // Scroll observers follow the real document flow; no pinned scroll distance is added.
+  document.querySelectorAll<HTMLElement>('main > .resume-section').forEach((section) => {
+    keep(
+      animate(section, {
+        '--section-progress': [0, 1],
+        ease: 'linear',
+        autoplay: keep(
+          onScroll({ target: section, enter: 'bottom top', leave: 'top bottom', sync: true }),
+        ),
+      }),
+    );
+  });
+  document.querySelectorAll<HTMLElement>('.product-story .gallery-item').forEach((item, index) => {
+    keep(
+      animate(item, {
+        y: small.matches ? [18, -10] : index % 2 ? [-30, 48] : [65, -40],
+        ease: 'linear',
+        autoplay: keep(
+          onScroll({
+            target: item.closest('.product-story')!,
+            enter: 'bottom top',
+            leave: 'top bottom',
+            sync: 0.6,
+          }),
+        ),
+      }),
+    );
+  });
+  document.querySelectorAll<HTMLElement>('.intro-photo img').forEach((photo) => {
+    keep(
+      animate(photo, {
+        y: small.matches ? [-6, 12] : [-15, 35],
+        scale: 1.1,
+        ease: 'linear',
+        autoplay: keep(
+          onScroll({
+            target: photo.closest('.intro-photo')!,
+            enter: 'bottom bottom',
+            leave: 'top top',
+            sync: 0.7,
+          }),
+        ),
+      }),
+    );
+  });
+  document.querySelectorAll<HTMLElement>('.research-viewer').forEach((viewer) => {
+    keep(
+      animate(viewer, {
+        '--research-progress': [0, 1],
+        ease: 'linear',
+        autoplay: keep(
+          onScroll({ target: viewer, enter: 'bottom top', leave: 'center center', sync: true }),
+        ),
+      }),
+    );
+  });
+  document.querySelectorAll<HTMLElement>('.job-list').forEach((list) => {
+    keep(
+      animate(list, {
+        '--timeline-progress': [0, 1],
+        ease: 'linear',
+        autoplay: keep(
+          onScroll({ target: list, enter: 'bottom top', leave: 'top bottom', sync: true }),
+        ),
       }),
     );
   });
@@ -123,13 +180,6 @@ function setupMotion() {
     stopMotion = () => {};
   };
 }
-toggle?.addEventListener('click', () => {
-  preference = preference === 'off' ? 'on' : 'off';
-  try {
-    localStorage.setItem('waylan-motion', preference);
-  } catch {}
-  setupMotion();
-});
 setupMotion();
 reduced.addEventListener('change', setupMotion);
 small.addEventListener('change', () => {
@@ -150,6 +200,7 @@ addEventListener(
       frame = true;
       requestAnimationFrame(() => {
         progress();
+        if (sections.length) activeSection();
         frame = false;
       });
     }
@@ -164,8 +215,6 @@ function activeSection() {
   for (const section of sections) {
     if (section.getBoundingClientRect().top <= 160) current = section.id;
   }
-  if (['systems', 'other', 'early-work'].includes(current))
-    current = current === 'early-work' ? 'research' : 'work';
   document.querySelectorAll('.site-header nav a').forEach((a) => {
     if (a.getAttribute('href') === `/#${current}`) a.setAttribute('aria-current', 'location');
     else a.removeAttribute('aria-current');
