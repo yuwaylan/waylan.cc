@@ -1,4 +1,5 @@
 import './gallery';
+import './experiments';
 import { animate, onScroll, svg, stagger } from 'animejs';
 const menu = document.querySelector<HTMLButtonElement>('.menu-toggle');
 const nav = document.querySelector<HTMLElement>('#navigation');

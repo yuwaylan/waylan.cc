@@ -2,6 +2,8 @@
 import Site from '../layouts/Site.astro';
 import MediaGallery from '../components/MediaGallery.astro';
 import ResearchViewer from '../components/ResearchViewer.astro';
+import HeroWireframe from '../components/HeroWireframe.astro';
+import LifeWindow from '../components/LifeWindow.astro';
 import { beScreens } from '../data/media';
 import { projects } from '../data/projects';
 const get = (slug: string) => projects.find((p) => p.slug === slug)!;
@@ -46,8 +48,14 @@ const jobs = [
 ---
 
 <Site>
-  <section id="intro" class="resume-intro section-shell" aria-label="自我介紹">
+  <section
+    id="intro"
+    class="resume-intro section-shell"
+    aria-label="自我介紹"
+    data-section-code="HELLO / 001"
+  >
     <div class="intro-copy">
+      <p class="section-kicker">FULL-STACK × APP × MACHINE VISION</p>
       <h1>余程漢</h1>
       <p class="english-name">Cheng-Han Yu</p>
       <p class="intro-role">Web、App 與 AI 應用開發</p>
@@ -67,18 +75,28 @@ const jobs = [
         </a>
       </div>
     </div>
-    <figure class="intro-photo image-clip">
-      <img
-        src="/images/portrait.webp"
-        alt="余程漢手持 Arduino 與相機"
-        width="1200"
-        height="1200"
-        fetchpriority="high"
-      />
-    </figure>
+    <div class="intro-visual">
+      <HeroWireframe />
+      <figure class="intro-photo image-clip">
+        <div class="photo-titlebar" aria-hidden="true">
+          PORTRAIT / CHY
+        </div>
+        <img
+          src="/images/portrait.webp"
+          alt="余程漢手持 Arduino 與相機"
+          width="1200"
+          height="1200"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
   </section>
 
-  <section id="experience" class="resume-section section-shell">
+  <section
+    id="experience"
+    class="resume-section section-shell"
+    data-section-code="CHRONOLOGY / 002"
+  >
     <h2 class="resume-heading">工作經歷</h2>
     <ol class="job-list">
       {jobs.map((job) => (
@@ -112,7 +130,12 @@ const jobs = [
     </ol>
   </section>
 
-  <section id="work" class="resume-section section-shell product-section">
+  <section
+    id="work"
+    class="resume-section section-shell product-section"
+    data-section-code="SELECTED SYSTEM / 003"
+  >
+    <span class="section-backdrop product-backdrop" aria-hidden="true"></span>
     <h2 class="resume-heading">
       Be水水<span>美業預約與顧客管理平台</span>
     </h2>
@@ -160,7 +183,7 @@ const jobs = [
     </div>
   </section>
 
-  <section id="research" class="resume-section section-shell">
+  <section id="research" class="resume-section section-shell" data-section-code="FIELD NOTES / 004">
     <h2 class="resume-heading">研究與發表</h2>
     <article class="research-feature">
       <div class="research-copy" data-reveal>
@@ -205,7 +228,7 @@ const jobs = [
     </article>
   </section>
 
-  <section id="other" class="resume-section section-shell">
+  <section id="other" class="resume-section section-shell" data-section-code="SIDE PROJECTS / 005">
     <h2 class="resume-heading">其他開發專案</h2>
     <article class="personality-feature" data-reveal>
       <figure>
@@ -264,7 +287,8 @@ const jobs = [
     </div>
   </section>
 
-  <section id="early-work" class="resume-section section-shell">
+  <section id="early-work" class="resume-section section-shell" data-section-code="ARCHIVE / 006">
+    <span class="section-backdrop archive-backdrop" aria-hidden="true"></span>
     <div class="heading-with-link">
       <h2 class="resume-heading">
         早期作品<span>2016–2019</span>
@@ -298,7 +322,20 @@ const jobs = [
     </div>
   </section>
 
-  <section id="education" class="resume-section section-shell">
+  <section class="experiment-break section-shell" aria-label="互動實驗">
+    <div class="experiment-copy">
+      <p class="section-kicker">A SMALL DETOUR</p>
+      <h2>Ideas keep moving.</h2>
+      <p>一個藏在履歷裡的小型生命實驗。按下 NEW SEED，看看簡單規則如何長出不同結果。</p>
+    </div>
+    <LifeWindow />
+  </section>
+
+  <section
+    id="education"
+    class="resume-section section-shell"
+    data-section-code="CREDENTIALS / 007"
+  >
     <h2 class="resume-heading">學歷與證照</h2>
     <div class="qualifications">
       <div class="education-list">
