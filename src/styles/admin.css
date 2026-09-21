@@ -1,3 +1,10 @@
+.admin-body {
+  --bg: #f7f7f5;
+  --accent: #b5412d;
+  --accent-strong: #b5412d;
+  background: var(--bg);
+}
+
 .admin-header {
   height: 84px;
   border-bottom: 1px solid var(--line);

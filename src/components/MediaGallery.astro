@@ -4,11 +4,18 @@ interface Props {
   id: string;
   items: Media[];
   single?: boolean;
+  variant?: 'default' | 'showcase';
 }
-const { id, items, single = false } = Astro.props;
+const { id, items, single = false, variant = 'default' } = Astro.props;
 ---
 
-<div class:list={['media-gallery', { 'gallery-single': single }]} data-gallery>
+<div
+  class:list={[
+    'media-gallery',
+    { 'gallery-single': single, 'gallery-showcase': variant === 'showcase' },
+  ]}
+  data-gallery
+>
   <div class="gallery-controls" role="group" aria-label="選擇展示畫面" hidden>
     {items.map((item, i) => (
       <button
@@ -54,5 +61,5 @@ const { id, items, single = false } = Astro.props;
       </figure>
     ))}
   </div>
-  <p class="image-instruction">點擊畫面可放大查看</p>
+  <p class="image-instruction">點擊畫面可放大查看；左右滑動可看更多畫面</p>
 </div>

@@ -1,13 +1,14 @@
 ---
 import '../styles/global.css';
 import '../styles/portfolio.css';
-import '../styles/new-look.css';
 import '@fontsource-variable/ibm-plex-sans';
 import '@fontsource/ibm-plex-mono/400.css';
+import FooterTorus from '../components/FooterTorus.astro';
 const {
   title = '余程漢 Cheng-Han Yu — Full-stack & AI Engineer',
   description = '余程漢的個人網站。Be水水共同創辦人暨 CTO、系統工程師。收錄 Web 與 App 開發、系統維運、影像研究與早期作品。',
   privatePage = false,
+  home = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -17,7 +18,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f7f5f1" />
+    <meta name="theme-color" content="#ffffff" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {privatePage ? (
@@ -34,7 +35,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     )}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body data-private={privatePage ? 'true' : 'false'}>
+  <body data-private={privatePage ? 'true' : 'false'} data-home={home ? 'true' : undefined}>
     <a href="#main" class="skip-link">
       跳至主要內容
     </a>
@@ -68,12 +69,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
     <footer class="site-footer">
-      <p class="footer-signal" aria-hidden="true">
-        END OF PAGE / NOT OF IDEAS
-      </p>
-      <p class="footer-wordmark" aria-hidden="true">
-        waylan.cc
-      </p>
+      <div class="footer-atmosphere">
+        <div>
+          <p class="footer-signal" aria-hidden="true">
+            END OF PAGE / NOT OF IDEAS
+          </p>
+          <p class="footer-wordmark" aria-hidden="true">
+            waylan.cc
+          </p>
+        </div>
+        <FooterTorus />
+      </div>
       <div class="footer-identity">
         <span>
           余程漢 <small>Cheng-Han Yu</small>

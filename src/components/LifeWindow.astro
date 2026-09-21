@@ -1,23 +1,17 @@
 <aside class="life-window" aria-labelledby="life-window-title" data-life-lab>
-  <div class="lab-titlebar">
-    <span id="life-window-title">SIDE QUEST / CELLULAR AUTOMATON</span>
+  <div class="life-window-heading">
+    <span id="life-window-title">A SMALL LIFE STUDY</span>
     <span data-life-generation>GEN 000</span>
   </div>
-  <canvas
-    data-life-canvas
-    width="720"
-    height="320"
-    aria-label="持續演化的康威生命遊戲點陣圖"
-    role="img"
-  ></canvas>
+  <canvas data-life-canvas width="640" height="280" aria-hidden="true"></canvas>
   <div class="life-toolbar">
     <p>Conway's Game of Life</p>
     <div>
-      <button type="button" data-life-toggle aria-pressed="false">
-        PAUSE
+      <button type="button" data-life-toggle aria-pressed="true">
+        Pause motion
       </button>
       <button type="button" data-life-reset>
-        NEW SEED
+        New seed
       </button>
     </div>
   </div>
