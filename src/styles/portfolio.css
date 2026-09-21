@@ -154,7 +154,11 @@
 }
 
 .intro-summary p + p {
-  margin-top: 12px;
+  margin-top: 18px;
+}
+
+.intro-summary strong {
+  font-weight: 600;
 }
 
 .experience,
@@ -827,22 +831,9 @@
 }
 
 .education-toy {
-  display: grid;
-  grid-template-columns: minmax(180px, 0.55fr) minmax(280px, 330px);
-  align-items: center;
-  justify-content: space-between;
-  gap: 42px;
-  max-width: 850px;
+  width: min(100%, 330px);
+  margin-inline-start: auto;
   margin-top: clamp(72px, 9vw, 126px);
-  padding-top: 28px;
-  border-top: 1px solid var(--line);
-}
-
-.education-toy > div > p:last-child {
-  margin-top: 9px;
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.75;
 }
 
 .life-window {
@@ -1470,15 +1461,6 @@
     padding: 28px 0 0;
     border-top: 1px solid var(--line);
     border-left: 0;
-  }
-
-  .education-toy {
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
-
-  .life-window {
-    justify-self: start;
   }
 
   .gallery-single .gallery-item {
