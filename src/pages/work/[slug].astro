@@ -9,8 +9,21 @@ export function getStaticPaths() {
   return caseStudies.map((project) => ({ params: { slug: project.slug }, props: { project } }));
 }
 const { project: p } = Astro.props as { project: Project };
+const related = caseStudies.filter((project) => Boolean(project.archive) === Boolean(p.archive));
+const ordered = [...related].sort((a, b) => {
+  const featured = [
+    'be-water',
+    'skin-texture',
+    'personality-assessment',
+    'ocr-search',
+    'nlp-assistant',
+  ];
+  const rankA = featured.indexOf(a.slug);
+  const rankB = featured.indexOf(b.slug);
+  return (rankA < 0 ? featured.length : rankA) - (rankB < 0 ? featured.length : rankB);
+});
 const next =
-  caseStudies[(caseStudies.findIndex((x) => x.slug === p.slug) + 1) % caseStudies.length];
+  ordered[(ordered.findIndex((project) => project.slug === p.slug) + 1) % ordered.length];
 const be = p.slug === 'be-water',
   skin = p.slug === 'skin-texture',
   personality = p.slug === 'personality-assessment',
@@ -35,24 +48,24 @@ const homeAnchor = p.archive ? '/archive/' : be ? '/#work' : research ? '/#resea
         </p>
       )}
       {be && (
-        <a
-          class="inline-link"
-          href="https://besuisui.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          網頁版 ↗
-        </a>
-      )}
-      {be && (
-        <a
-          class="inline-link status-link"
-          href="https://status.besuisui.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          查看服務狀態 ↗
-        </a>
+        <div class="project-links">
+          <a
+            class="inline-link"
+            href="https://besuisui.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            網頁版 ↗
+          </a>
+          <a
+            class="inline-link"
+            href="https://status.besuisui.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            查看服務狀態 ↗
+          </a>
+        </div>
       )}
       <dl class="case-meta">
         <div>
@@ -69,11 +82,6 @@ const homeAnchor = p.archive ? '/archive/' : be ? '/#work' : research ? '/#resea
         </div>
       </dl>
     </header>
-    {be && (
-      <section class="case-product" aria-label="Be水水 App 功能畫面">
-        <MediaGallery id="be-case" items={beScreens} single />
-      </section>
-    )}
     {skin && (
       <div class="case-research-visual">
         <ResearchViewer id="skin-case" />
@@ -133,11 +141,11 @@ const homeAnchor = p.archive ? '/archive/' : be ? '/#work' : research ? '/#resea
     )}
     <div class="case-body">
       <section class="case-section" data-reveal>
-        <h2>{research ? '研究內容' : '作品背景'}</h2>
+        <h2>{be ? '產品與使用情境' : research ? '研究內容' : '作品背景'}</h2>
         <p>{p.context}</p>
       </section>
       <section class="case-section" data-reveal>
-        <h2>{research ? '研究工作' : '我的工作'}</h2>
+        <h2>{be ? '我的責任範圍' : research ? '研究工作' : '我的工作'}</h2>
         <ul class="contribution-list">
           {p.contributions.map((c) => (
             <li>{c}</li>
@@ -145,10 +153,49 @@ const homeAnchor = p.archive ? '/archive/' : be ? '/#work' : research ? '/#resea
         </ul>
       </section>
       {be && (
-        <section class="case-section" data-reveal>
-          <h2>系統架構</h2>
-          <Architecture />
-        </section>
+        <>
+          <section class="case-screens" aria-labelledby="be-screens-title">
+            <h2 id="be-screens-title">從找服務到安排工作</h2>
+            <p>
+              顧客透過附近工作室與服務選單完成預約選擇；技師透過行事曆與顧客標籤安排工作、整理服務對象。
+            </p>
+            <MediaGallery id="be-case" items={beScreens} single />
+          </section>
+          <section class="case-section" data-reveal>
+            <h2>系統如何組成</h2>
+            <div>
+              <p class="architecture-intro">
+                Web 與跨平台 App 串接 Laravel API，由後端處理產品功能，搭配 MySQL 儲存資料與 Redis
+                快取。
+              </p>
+              <Architecture />
+            </div>
+          </section>
+          <section class="case-section" data-reveal>
+            <h2>正式環境與持續開發</h2>
+            <div>
+              <p>{p.operations}</p>
+              <div class="project-links">
+                <a
+                  class="inline-link"
+                  href="https://besuisui.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  前往 Be水水網頁版 ↗
+                </a>
+                <a
+                  class="inline-link"
+                  href="https://status.besuisui.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  查看服務狀態 ↗
+                </a>
+              </div>
+            </div>
+          </section>
+        </>
       )}
       {skin && (
         <>

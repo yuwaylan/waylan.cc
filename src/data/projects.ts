@@ -10,6 +10,7 @@ export type Project = {
   context: string;
   contributions: string[];
   outcome?: string;
+  operations?: string;
   href?: string;
   citation?: string;
   grant?: string;
@@ -31,11 +32,12 @@ export const projects: Project[] = [
     context:
       'Be水水透過 App 與網頁，提供美甲、美睫與霧眉工作室預約與顧客管理工具。顧客可以查看附近工作室、選擇服務與技師；技師使用行事曆安排預約，整理顧客標籤與服務紀錄。',
     contributions: [
-      '負責技術架構規劃、API、網頁與跨平台 App 開發。',
+      '負責產品技術規劃與系統架構，串起顧客、技師與管理者的使用需求。',
       '規劃並開發會員、預約、價目表、服務紀錄、評價與報表。',
       '建置 Laravel API、Vue Web 前端與 Flutter 跨平台應用，整合 MySQL、Redis 與雲端服務。',
-      '負責正式環境部署、備份、監控、版本發布與技術 Roadmap。',
     ],
+    operations:
+      '除了 API、Web 與 App 開發，我也負責正式環境部署、備份、監控與版本發布，並規劃產品的技術 Roadmap。',
     diagram: ['顧客 / 技師 / 管理者', 'Vue.js + Flutter', 'Laravel API', 'MySQL + Redis'],
   },
   {

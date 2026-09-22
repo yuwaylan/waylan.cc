@@ -70,7 +70,8 @@ function updateProgress() {
 function updateActiveSection() {
   let current = 'intro';
   for (const section of sections) {
-    if (section.getBoundingClientRect().top <= 160) current = section.id;
+    if (section.getBoundingClientRect().top <= 160)
+      current = section.dataset.navAnchor || section.id;
   }
   document.querySelectorAll('.site-header nav a').forEach((anchor) => {
     if (anchor.getAttribute('href') === `/#${current}`)

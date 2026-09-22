@@ -5,8 +5,8 @@ import '@fontsource-variable/ibm-plex-sans';
 import '@fontsource/ibm-plex-mono/400.css';
 import FooterTorus from '../components/FooterTorus.astro';
 const {
-  title = '余程漢 Cheng-Han Yu — Full-stack & AI Engineer',
-  description = '余程漢的個人網站。Be水水共同創辦人暨 CTO、系統工程師。收錄 Web 與 App 開發、系統維運、影像研究與早期作品。',
+  title = '余程漢 Cheng-Han Yu — 全端工程師・產品開發',
+  description = '余程漢的個人網站。Be水水共同創辦人暨 CTO、島宇系統工程師，從需求、Web 與 App 開發到正式環境維運。記錄產品、電腦視覺研究，以及互動與影像創作。',
   privatePage = false,
   home = false,
 } = Astro.props;
@@ -46,12 +46,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       </a>
       <nav aria-label="主要導覽" id="navigation">
         <a href="/#intro">介紹</a>
-        <a href="/#experience">經歷</a>
-        <a href="/#work">Be水水</a>
+        <a href="/#work">作品</a>
         <a href="/#research">研究</a>
-        <a href="/#other">其他專案</a>
+        <a href="/#experience">經歷</a>
         <a href="/#early-work">早期作品</a>
-        <a href="/#education">學歷</a>
+        <a href="/#contact">找到我</a>
       </nav>
       <a
         class="header-github"

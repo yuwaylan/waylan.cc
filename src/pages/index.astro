@@ -12,13 +12,45 @@ const ocr = get('ocr-search');
 const personality = get('personality-assessment');
 const certification = get('certification-system');
 const earlySlugs = ['ocean-defense', 'editorial-reader', 'chinese-checkers', 'cocktail'];
+const journey = [
+  {
+    period: '2016–2019',
+    title: '互動與影像',
+    description: '從 Android、互動裝置、遊戲與攝影，探索軟體與人的互動。',
+    href: '#early-work',
+  },
+  {
+    period: '2020–2021',
+    title: 'App 與後端',
+    description: '開發研究用 App、API 與資料庫，也參與報名系統維運。',
+    href: '#other',
+  },
+  {
+    period: '2021–2024',
+    title: 'AI 與研究',
+    description: '碩士期間投入 NLP、OCR 與電腦視覺，完成影像研究與發表。',
+    href: '#research',
+  },
+  {
+    period: '2024–至今',
+    title: '正式系統與教學',
+    description: '參與數位學習平台的開發、部署與維運，並曾教授大學課程。',
+    href: '#experience',
+  },
+  {
+    period: '2026–至今',
+    title: '共同創辦產品',
+    description: '共同創辦 Be水水，負責產品技術規劃、Web、App 與正式環境。',
+    href: '#work',
+  },
+];
 const jobs = [
   {
     company: '必水水股份有限公司',
     role: '共同創辦人 / CTO',
     period: '2026–至今',
     items: [
-      '負責 Be水水的技術架構、Web 與跨平台 App 開發。',
+      '負責 Be水水的產品技術規劃與系統架構，開發 API、Web 與 Flutter App。',
       '處理正式環境部署、備份、監控與版本發布。',
     ],
     links: [{ label: 'Be水水專案', href: '#work' }],
@@ -28,8 +60,8 @@ const jobs = [
     role: '系統工程師',
     period: '2024–至今',
     items: [
-      '負責來上客與族語 E 樂園的維運、功能修改與問題排查，另負責哈客網路學院系統維運。',
-      '進行前後端與資料庫調整、正式環境部署，依系統 Log 追查異常。',
+      '參與來上客與族語 E 樂園的系統開發與維運，工作涵蓋前後端修改、資料庫調整及正式環境部署。',
+      '依系統 Log 追查異常與處理問題；另負責哈客網路學院系統維運。',
     ],
     links: [
       { label: '來上客', href: 'https://12basic.hakka.gov.tw/' },
@@ -65,85 +97,76 @@ const jobs = [
 
   <section class="identity section-shell" aria-labelledby="identity-title">
     <span class="crop-mark crop-mark-top" aria-hidden="true"></span>
-    <p class="section-label">Full-stack · App · Machine Vision</p>
+    <p class="section-label">Full-stack Engineer</p>
     <h1 id="identity-title">余程漢</h1>
     <p class="english-name">Cheng-Han Yu</p>
-    <p class="intro-role">Web、App 與 AI 應用開發</p>
+    <p class="intro-role">
+      從需求、開發到正式運行，
+      <br class="mobile-break" />
+      讓產品真正被使用。
+    </p>
+    <p class="intro-now">
+      <a href="/work/be-water/">Be水水共同創辦人 / CTO</a>
+      <span aria-hidden="true">·</span>
+      <a href="#experience">島宇系統工程師</a>
+    </p>
     <div class="intro-links">
-      <a class="underlined" href="#experience">
-        查看工作經歷 ↓
-      </a>
       <a class="underlined" href="#work">
-        看 Be水水作品 ↓
+        看代表作品 ↓
+      </a>
+      <a class="underlined" href="#about">
+        認識我的經歷 ↓
       </a>
     </div>
     <span class="crop-mark crop-mark-bottom" aria-hidden="true"></span>
   </section>
 
-  <section class="bio section-shell" aria-labelledby="about-title">
-    <figure class="bio-portrait image-clip">
-      <img
-        src="/images/portrait.webp"
-        alt="余程漢手持 Arduino 與相機"
-        width="1200"
-        height="1200"
-        loading="lazy"
-      />
-    </figure>
-    <div class="bio-copy">
-      <p class="section-label">About</p>
-      <h2 id="about-title">從需求、架構到部署，讓技術真正成為可使用的產品。</h2>
-      <div class="intro-summary">
-        <p>
-          目前共同創辦 <strong>Be水水</strong>，負責美業 SaaS 預約平台的產品技術規劃、系統架構與核心功能開發；同時於
-          <strong>島宇人工智慧服務股份有限公司</strong>擔任系統工程師，參與客語及原住民族語數位學習平台的系統開發、部署與維運。
-        </p>
-        <p>
-          具備從<strong>需求分析、系統設計、前後端開發、資料庫整合到雲端部署與正式環境維運</strong>的完整實務經驗，技術領域涵蓋
-          Web、跨平台應用、雲端基礎設施與 AI 應用。
-        </p>
-        <p>
-          碩士畢業於元智大學資訊傳播學系，研究方向為<strong>人工智慧與電腦視覺</strong>，以深度學習進行微觀皮膚影像之紋理輪廓偵測。期望持續將研究、新技術與軟體工程結合，轉化為能實際解決問題的產品與系統。
-        </p>
+  <section
+    id="about"
+    data-nav-anchor="intro"
+    class="about-section section-shell"
+    aria-labelledby="about-title"
+  >
+    <div class="bio">
+      <figure class="bio-portrait image-clip">
+        <img
+          src="/images/portrait.webp"
+          alt="余程漢手持 Arduino 與相機"
+          width="1200"
+          height="1200"
+          loading="lazy"
+        />
+      </figure>
+      <div class="bio-copy">
+        <p class="section-label">About</p>
+        <h2 id="about-title">從互動與影像，走進產品與系統。</h2>
+        <div class="intro-summary">
+          <p>
+            大學時做過互動裝置、Android App、遊戲與攝影，後來投入跨平台應用、後端與電腦視覺研究。
+            現在，我把這些經驗帶進
+            Be水水的產品開發，以及數位學習平台的系統工作，持續在實際使用情境中解決問題。
+          </p>
+        </div>
       </div>
     </div>
-  </section>
-
-  <section id="experience" class="experience section-shell" aria-labelledby="experience-title">
-    <header class="section-heading">
-      <p class="section-label">Experience</p>
-      <h2 id="experience-title">工作經歷</h2>
-    </header>
-    <ol class="job-list">
-      {jobs.map((job) => (
-        <li class="job" data-reveal>
-          <p class="job-period">{job.period}</p>
-          <div class="job-content">
-            <div class="job-heading">
-              <h3>{job.company}</h3>
-              <p>{job.role}</p>
-            </div>
-            <ul>
-              {job.items.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-            <div class="job-links">
-              {job.links.map((link) => (
-                <a
-                  class="inline-link"
-                  href={link.href}
-                  target={link.href.startsWith('https') ? '_blank' : undefined}
-                  rel={link.href.startsWith('https') ? 'noopener noreferrer' : undefined}
-                >
-                  {link.label} ↗
-                </a>
-              ))}
-            </div>
-          </div>
-        </li>
-      ))}
-    </ol>
+    <div class="journey" aria-labelledby="journey-title">
+      <h3 id="journey-title" class="journey-heading">
+        我怎麼走到現在
+      </h3>
+      <ol class="journey-list">
+        {journey.map((step) => (
+          <li>
+            <p class="journey-period">{step.period}</p>
+            <h4>
+              <a href={step.href}>
+                {step.title} <span aria-hidden="true">↗</span>
+              </a>
+            </h4>
+            <p>{step.description}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
   </section>
 
   <div class="project-river">
@@ -153,12 +176,11 @@ const jobs = [
       aria-labelledby="be-water-title"
     >
       <header class="project-heading">
-        <p class="section-label">Selected product</p>
+        <p class="section-label">Selected work · 01</p>
         <h2 id="be-water-title">Be水水</h2>
         <p>美業預約與顧客管理平台</p>
       </header>
       <div class="product-story">
-        <MediaGallery id="be-home" items={beScreens.slice(0, 2)} variant="showcase" />
         <div class="product-copy" data-reveal>
           <div class="product-intro">
             <p class="project-byline">共同創辦人 / CTO · 2026–至今</p>
@@ -179,7 +201,7 @@ const jobs = [
             </p>
             <div class="project-links">
               <a class="inline-link" href="/work/be-water/">
-                查看功能與開發內容 ↗
+                閱讀產品與開發內容 ↗
               </a>
               <a
                 class="inline-link"
@@ -200,6 +222,7 @@ const jobs = [
             </div>
           </div>
         </div>
+        <MediaGallery id="be-home" items={beScreens.slice(0, 2)} variant="showcase" />
       </div>
     </section>
 
@@ -209,7 +232,7 @@ const jobs = [
       aria-labelledby="research-title"
     >
       <header class="section-heading">
-        <p class="section-label">Research & publication</p>
+        <p class="section-label">Selected work · 02</p>
         <h2 id="research-title">研究與發表</h2>
       </header>
       <article class="research-feature">
@@ -257,6 +280,7 @@ const jobs = [
 
     <section
       id="other"
+      data-nav-anchor="work"
       class="project-block other-block section-shell"
       aria-labelledby="other-title"
     >
@@ -322,6 +346,43 @@ const jobs = [
     </section>
   </div>
 
+  <section id="experience" class="experience section-shell" aria-labelledby="experience-title">
+    <header class="section-heading">
+      <p class="section-label">Experience</p>
+      <h2 id="experience-title">工作經歷</h2>
+    </header>
+    <ol class="job-list">
+      {jobs.map((job) => (
+        <li class="job" data-reveal>
+          <p class="job-period">{job.period}</p>
+          <div class="job-content">
+            <div class="job-heading">
+              <h3>{job.company}</h3>
+              <p>{job.role}</p>
+            </div>
+            <ul>
+              {job.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <div class="job-links">
+              {job.links.map((link) => (
+                <a
+                  class="inline-link"
+                  href={link.href}
+                  target={link.href.startsWith('https') ? '_blank' : undefined}
+                  rel={link.href.startsWith('https') ? 'noopener noreferrer' : undefined}
+                >
+                  {link.label} ↗
+                </a>
+              ))}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
   <section id="early-work" class="archive-section section-shell" aria-labelledby="archive-title">
     <div class="heading-with-link">
       <div>
@@ -333,6 +394,10 @@ const jobs = [
         全部早期作品 ↗
       </a>
     </div>
+    <p class="archive-context">
+      大學時，我用 App 回應家人的需求，也透過互動裝置、遊戲與短片嘗試不同的表達方式。
+      這些作品保留了我開始做東西時的好奇心，以及軟體之外的興趣。
+    </p>
     <div class="early-grid">
       {earlySlugs.map((slug) => {
         const p = get(slug);
@@ -385,8 +450,50 @@ const jobs = [
         </ul>
       </div>
     </div>
-    <div class="education-toy">
-      <LifeWindow />
+  </section>
+
+  <section id="contact" class="contact-section section-shell" aria-labelledby="contact-title">
+    <div class="contact-content">
+      <div>
+        <p class="section-label">Elsewhere</p>
+        <h2 id="contact-title">交流與更多作品</h2>
+        <p class="contact-copy">
+          我的工作涵蓋產品開發、Web / App 與電腦視覺。歡迎透過 Email 聯絡，更多程式與專案則收錄在
+          GitHub。
+        </p>
+      </div>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:waylanyu@gmail.com">
+          <span>Email</span>
+          <span class="contact-account">
+            waylanyu@gmail.com <span aria-hidden="true">↗</span>
+          </span>
+        </a>
+        <a
+          class="contact-link"
+          href="https://github.com/yuwaylan"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>GitHub</span>
+          <span class="contact-account">
+            yuwaylan <span aria-hidden="true">↗</span>
+          </span>
+        </a>
+      </div>
     </div>
   </section>
+
+  <aside class="side-note section-shell" aria-labelledby="side-note-title">
+    <div>
+      <p class="section-label">Side note</p>
+      <h2 id="side-note-title">
+        簡單規則也會長出
+        <br />
+        意料之外的形狀。
+      </h2>
+      <p class="side-note-caption">Conway’s Game of Life</p>
+    </div>
+    <LifeWindow />
+  </aside>
 </Site>
