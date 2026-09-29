@@ -382,7 +382,7 @@
   line-height: 1.35;
 }
 
-.be-water-block .project-heading h2 {
+.featured-product-block .project-heading h2 {
   font-size: clamp(72px, 8vw, 104px);
 }
 
@@ -1548,8 +1548,7 @@
     margin-bottom: 39px;
   }
 
-  .project-heading h2,
-  .be-water-block .project-heading h2 {
+  .project-heading h2 {
     font-size: clamp(64px, 21vw, 92px);
   }
 

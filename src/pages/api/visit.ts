@@ -1,11 +1,11 @@
 import type { APIRoute } from 'astro';
-import { projects } from '../../data/projects';
+import { publicProjects } from '../../data/projects';
 import { dbConfigured } from '../../lib/db';
 import { env, siteOrigin } from '../../lib/env';
 import { sameOrigin, smallJSON, safePath, sourceHost, requestIP } from '../../lib/security';
 import { recordVisit } from '../../lib/analytics';
 export const prerender = false;
-const allowed = new Set(['/', '/archive/', ...projects.map((p) => `/work/${p.slug}/`)]);
+const allowed = new Set(['/', '/archive/', ...publicProjects.map((p) => `/work/${p.slug}/`)]);
 export const POST: APIRoute = async (ctx) => {
   const response = (status = 204) =>
     new Response(null, { status, headers: { 'Cache-Control': 'no-store' } });

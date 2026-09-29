@@ -4,9 +4,10 @@ import MediaGallery from '../components/MediaGallery.astro';
 import ResearchViewer from '../components/ResearchViewer.astro';
 import LifeWindow from '../components/LifeWindow.astro';
 import { beScreens } from '../data/media';
-import { projects } from '../data/projects';
+import { projects, publicProjects } from '../data/projects';
 
 const get = (slug: string) => projects.find((p) => p.slug === slug)!;
+const showBeWater = publicProjects.some((project) => project.slug === 'be-water');
 const skin = get('skin-texture');
 const ocr = get('ocr-search');
 const personality = get('personality-assessment');
@@ -37,24 +38,32 @@ const journey = [
     description: '參與數位學習平台的開發、部署與維運，並曾教授大學課程。',
     href: '#experience',
   },
-  {
-    period: '2026–至今',
-    title: '共同創辦產品',
-    description: '共同創辦 Be水水，負責產品技術規劃、Web、App 與正式環境。',
-    href: '#work',
-  },
+  ...(showBeWater
+    ? [
+        {
+          period: '2026–至今',
+          title: '共同創辦產品',
+          description: '共同創辦 Be水水，負責產品技術規劃、Web、App 與正式環境。',
+          href: '#work',
+        },
+      ]
+    : []),
 ];
 const jobs = [
-  {
-    company: '必水水股份有限公司',
-    role: '共同創辦人 / CTO',
-    period: '2026–至今',
-    items: [
-      '負責 Be水水的產品技術規劃與系統架構，開發 API、Web 與 Flutter App。',
-      '處理正式環境部署、備份、監控與版本發布。',
-    ],
-    links: [{ label: 'Be水水專案', href: '#work' }],
-  },
+  ...(showBeWater
+    ? [
+        {
+          company: '必水水股份有限公司',
+          role: '共同創辦人 / CTO',
+          period: '2026–至今',
+          items: [
+            '負責 Be水水的產品技術規劃與系統架構，開發 API、Web 與 Flutter App。',
+            '處理正式環境部署、備份、監控與版本發布。',
+          ],
+          links: [{ label: 'Be水水專案', href: '#work' }],
+        },
+      ]
+    : []),
   {
     company: '島宇人工智慧服務股份有限公司',
     role: '系統工程師',
@@ -106,8 +115,12 @@ const jobs = [
       讓產品真正被使用。
     </p>
     <p class="intro-now">
-      <a href="/work/be-water/">Be水水共同創辦人 / CTO</a>
-      <span aria-hidden="true">·</span>
+      {showBeWater && (
+        <>
+          <a href="/work/be-water/">Be水水共同創辦人 / CTO</a>
+          <span aria-hidden="true">·</span>
+        </>
+      )}
       <a href="#experience">島宇系統工程師</a>
     </p>
     <div class="intro-links">
@@ -143,8 +156,9 @@ const jobs = [
         <div class="intro-summary">
           <p>
             大學時做過互動裝置、Android App、遊戲與攝影，後來投入跨平台應用、後端與電腦視覺研究。
-            現在，我把這些經驗帶進
-            Be水水的產品開發，以及數位學習平台的系統工作，持續在實際使用情境中解決問題。
+            {showBeWater
+              ? '現在，我把這些經驗帶進 Be水水的產品開發，以及數位學習平台的系統工作，持續在實際使用情境中解決問題。'
+              : '現在，我把這些經驗帶進數位學習平台的系統工作，持續在實際使用情境中解決問題。'}
           </p>
         </div>
       </div>
@@ -169,62 +183,64 @@ const jobs = [
     </div>
   </section>
 
-  <div class="project-river">
-    <section
-      id="work"
-      class="project-block be-water-block section-shell"
-      aria-labelledby="be-water-title"
-    >
-      <header class="project-heading">
-        <p class="section-label">Selected work · 01</p>
-        <h2 id="be-water-title">Be水水</h2>
-        <p>美業預約與顧客管理平台</p>
-      </header>
-      <div class="product-story">
-        <div class="product-copy" data-reveal>
-          <div class="product-intro">
-            <p class="project-byline">共同創辦人 / CTO · 2026–至今</p>
-            <h3>顧客找服務，技師安排每天的工作。</h3>
-          </div>
-          <div class="product-details">
-            <p>
-              Be水水提供 App
-              與網頁服務。顧客可以查看附近工作室、選擇服務與技師；技師則透過行事曆安排預約，整理顧客標籤與服務紀錄。
-            </p>
-            <p>
-              我負責技術架構與產品開發，建置 API、網頁與跨平台 App，並處理部署、備份與版本發布。
-            </p>
-            <p class="tech-line">
-              Laravel · Vue.js · Flutter
-              <br />
-              MySQL · Redis
-            </p>
-            <div class="project-links">
-              <a class="inline-link" href="/work/be-water/">
-                閱讀產品與開發內容 ↗
-              </a>
-              <a
-                class="inline-link"
-                href="https://besuisui.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                網頁版 ↗
-              </a>
-              <a
-                class="inline-link"
-                href="https://status.besuisui.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                服務狀態 ↗
-              </a>
+  <div class="project-river" id={showBeWater ? undefined : 'work'}>
+    {showBeWater && (
+      <section
+        id="work"
+        class="project-block featured-product-block section-shell"
+        aria-labelledby="be-water-title"
+      >
+        <header class="project-heading">
+          <p class="section-label">Selected work · 01</p>
+          <h2 id="be-water-title">Be水水</h2>
+          <p>美業預約與顧客管理平台</p>
+        </header>
+        <div class="product-story">
+          <div class="product-copy" data-reveal>
+            <div class="product-intro">
+              <p class="project-byline">共同創辦人 / CTO · 2026–至今</p>
+              <h3>顧客找服務，技師安排每天的工作。</h3>
+            </div>
+            <div class="product-details">
+              <p>
+                Be水水提供 App
+                與網頁服務。顧客可以查看附近工作室、選擇服務與技師；技師則透過行事曆安排預約，整理顧客標籤與服務紀錄。
+              </p>
+              <p>
+                我負責技術架構與產品開發，建置 API、網頁與跨平台 App，並處理部署、備份與版本發布。
+              </p>
+              <p class="tech-line">
+                Laravel · Vue.js · Flutter
+                <br />
+                MySQL · Redis
+              </p>
+              <div class="project-links">
+                <a class="inline-link" href="/work/be-water/">
+                  閱讀產品與開發內容 ↗
+                </a>
+                <a
+                  class="inline-link"
+                  href="https://besuisui.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  網頁版 ↗
+                </a>
+                <a
+                  class="inline-link"
+                  href="https://status.besuisui.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  服務狀態 ↗
+                </a>
+              </div>
             </div>
           </div>
+          <MediaGallery id="be-home" items={beScreens.slice(0, 2)} variant="showcase" />
         </div>
-        <MediaGallery id="be-home" items={beScreens.slice(0, 2)} variant="showcase" />
-      </div>
-    </section>
+      </section>
+    )}
 
     <section
       id="research"
@@ -232,7 +248,7 @@ const jobs = [
       aria-labelledby="research-title"
     >
       <header class="section-heading">
-        <p class="section-label">Selected work · 02</p>
+        <p class="section-label">Selected work · {showBeWater ? '02' : '01'}</p>
         <h2 id="research-title">研究與發表</h2>
       </header>
       <article class="research-feature">
