@@ -40,7 +40,7 @@ export const projects: Project[] = [
     operations:
       '除了 API、Web 與 App 開發，我也負責正式環境部署、備份、監控與版本發布，並規劃產品的技術 Roadmap。',
     diagram: ['顧客 / 技師 / 管理者', 'Vue.js + Flutter', 'Laravel API', 'MySQL + Redis'],
-    // 暫時不公開。重新公開時移除此欄，並刪除 vercel.json 裡 /work/be-water 與 /images/be- 的標頭。
+    // 暫時不公開。重新公開時移除此欄，把 assets/withheld/be-water 的圖移回 public/images/，並刪除 vercel.json 裡對應標頭。
     hidden: true,
   },
   {
