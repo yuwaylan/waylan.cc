@@ -3,7 +3,7 @@ export const prerender = false;
 import Admin from '../../layouts/Admin.astro';
 import { adminSession, noCache } from '../../lib/auth';
 import { localMode, retentionDays } from '../../lib/env';
-import { projects } from '../../data/projects';
+import { publicProjects } from '../../data/projects';
 noCache(Astro);
 const session = adminSession(Astro.cookies);
 if (!session) return Astro.redirect('/admin/login/');
@@ -49,7 +49,7 @@ if (!session) return Astro.redirect('/admin/login/');
           <option value="">所有頁面</option>
           <option value="/">首頁</option>
           <option value="/archive/">Archive</option>
-          {projects.map((p) => (
+          {publicProjects.map((p) => (
             <option value={`/work/${p.slug}/`}>{p.title}</option>
           ))}
         </select>

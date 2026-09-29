@@ -4,9 +4,13 @@ import '../styles/portfolio.css';
 import '@fontsource-variable/ibm-plex-sans';
 import '@fontsource/ibm-plex-mono/400.css';
 import FooterTorus from '../components/FooterTorus.astro';
+import { publicProjects } from '../data/projects';
+const beWaterPublic = publicProjects.some((project) => project.slug === 'be-water');
 const {
   title = '余程漢 Cheng-Han Yu — 全端工程師・產品開發',
-  description = '余程漢的個人網站。Be水水共同創辦人暨 CTO、島宇系統工程師，從需求、Web 與 App 開發到正式環境維運。記錄產品、電腦視覺研究，以及互動與影像創作。',
+  description = beWaterPublic
+    ? '余程漢的個人網站。Be水水共同創辦人暨 CTO、島宇系統工程師，從需求、Web 與 App 開發到正式環境維運。記錄產品、電腦視覺研究，以及互動與影像創作。'
+    : '余程漢的個人網站。島宇系統工程師，從需求、Web 與 App 開發到正式環境維運。記錄產品、電腦視覺研究，以及互動與影像創作。',
   privatePage = false,
   home = false,
 } = Astro.props;

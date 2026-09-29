@@ -1,4 +1,5 @@
 import { defineMiddleware } from 'astro:middleware';
+import { isSearchHiddenPath } from './data/projects';
 export const onRequest = defineMiddleware(async (context, next) => {
   const response = await next();
   response.headers.set('X-Content-Type-Options', 'nosniff');
@@ -11,6 +12,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
   ) {
     response.headers.set('Cache-Control', 'private, no-store');
     response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  }
+  if (isSearchHiddenPath(context.url.pathname)) {
+    response.headers.set('Cache-Control', 'private, no-store');
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, noimageindex');
   }
   return response;
 });

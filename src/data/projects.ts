@@ -18,6 +18,7 @@ export type Project = {
   diagram?: string[];
   archive?: boolean;
   award?: string;
+  hidden?: boolean;
 };
 export const projects: Project[] = [
   {
@@ -39,6 +40,8 @@ export const projects: Project[] = [
     operations:
       '除了 API、Web 與 App 開發，我也負責正式環境部署、備份、監控與版本發布，並規劃產品的技術 Roadmap。',
     diagram: ['顧客 / 技師 / 管理者', 'Vue.js + Flutter', 'Laravel API', 'MySQL + Redis'],
+    // 暫時不公開。重新公開時移除此欄，並刪除 vercel.json 裡 /work/be-water 與 /images/be- 的標頭。
+    hidden: true,
   },
   {
     slug: 'nlp-assistant',
@@ -291,5 +294,15 @@ export const projects: Project[] = [
     archive: true,
   },
 ];
-export const archive = projects.filter((p) => p.archive);
-export const caseStudies = projects.filter((p) => !p.href);
+export const publicProjects = projects.filter((p) => !p.hidden);
+export const archive = publicProjects.filter((p) => p.archive);
+export const caseStudies = publicProjects.filter((p) => !p.href);
+export function isSearchHiddenPath(pathname: string) {
+  for (const project of projects) {
+    if (!project.hidden) continue;
+    const base = `/work/${project.slug}`;
+    if (pathname === base || pathname.startsWith(`${base}/`)) return true;
+    if (project.slug === 'be-water' && pathname.startsWith('/images/be-')) return true;
+  }
+  return false;
+}
