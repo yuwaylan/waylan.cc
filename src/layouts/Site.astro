@@ -1,9 +1,10 @@
 ---
 import '../styles/global.css';
 import '../styles/portfolio.css';
-import '@fontsource-variable/ibm-plex-sans';
-import '@fontsource/ibm-plex-mono/400.css';
-import FooterTorus from '../components/FooterTorus.astro';
+import '../styles/storybook.css';
+import '../styles/scroll-motion.css';
+import '@fontsource/huninn/400.css';
+import StoryIllustration from '../components/StoryIllustration.astro';
 import { publicProjects } from '../data/projects';
 const beWaterPublic = publicProjects.some((project) => project.slug === 'be-water');
 const {
@@ -22,7 +23,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#FFFCF6" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {privatePage ? (
@@ -67,6 +68,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <button class="menu-toggle" aria-expanded="false" aria-controls="navigation">
         選單 <span aria-hidden="true">＋</span>
       </button>
+      <button class="motion-toggle" type="button" data-story-motion aria-pressed="false" hidden>
+        暫停動畫
+      </button>
     </header>
     <main id="main">
       <slot />
@@ -74,14 +78,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <footer class="site-footer">
       <div class="footer-atmosphere">
         <div>
-          <p class="footer-signal" aria-hidden="true">
-            END OF PAGE / NOT OF IDEAS
-          </p>
+          <p class="footer-signal">故事還在繼續，下次見。</p>
           <p class="footer-wordmark" aria-hidden="true">
             waylan.cc
           </p>
         </div>
-        <FooterTorus />
+        <StoryIllustration kind="book" class="footer-illustration" />
       </div>
       <div class="footer-identity">
         <span>

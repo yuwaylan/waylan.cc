@@ -1,5 +1,7 @@
 import './gallery';
 import './experiments';
+import './storybook';
+import './scroll-motion';
 
 const menu = document.querySelector<HTMLButtonElement>('.menu-toggle');
 const nav = document.querySelector<HTMLElement>('#navigation');
@@ -32,11 +34,7 @@ let revealObserver: IntersectionObserver | undefined;
 function setupReveals() {
   revealObserver?.disconnect();
   document.documentElement.classList.remove('motion-enabled');
-  document
-    .querySelectorAll('[data-reveal]')
-    .forEach((element) => element.classList.remove('is-revealed'));
-  document.dispatchEvent(new Event('waylan:motion-change'));
-  if (reducedMotion.matches) return;
+  if (reducedMotion.matches || document.documentElement.dataset.storyMotion === 'paused') return;
   document.documentElement.classList.add('motion-enabled');
   revealObserver = new IntersectionObserver(
     (entries) => {
@@ -46,15 +44,20 @@ function setupReveals() {
         revealObserver?.unobserve(entry.target);
       }
     },
-    { threshold: 0.08, rootMargin: '0px 0px -4% 0px' },
+    { threshold: 0.2, rootMargin: '0px 0px -6% 0px' },
   );
-  document
-    .querySelectorAll<HTMLElement>('[data-reveal]')
-    .forEach((element) => revealObserver?.observe(element));
+  document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((element) => {
+    const group = element.parentElement;
+    const columns = group ? getComputedStyle(group).gridTemplateColumns.split(' ').length : 1;
+    const siblings = group ? [...group.children] : [element];
+    element.style.setProperty('--reveal-delay', `${(siblings.indexOf(element) % columns) * 130}ms`);
+    if (!element.classList.contains('is-revealed')) revealObserver?.observe(element);
+  });
 }
 
 setupReveals();
 reducedMotion.addEventListener('change', setupReveals);
+document.addEventListener('waylan:motion-change', setupReveals);
 
 const progressElement = document.querySelector<HTMLElement>('.reading-progress');
 const sections = [...document.querySelectorAll<HTMLElement>('main section[id]')];
