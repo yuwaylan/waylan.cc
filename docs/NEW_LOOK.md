@@ -11,14 +11,24 @@
 - 插圖由 `src/components/StoryIllustration.astro` 以原生 SVG 繪製，題材包含工程師書桌、筆電、顯微鏡、手機、相機、書本、信封與行李箱。
 - 前台共用主題為 `src/styles/storybook.css`；作品詳頁、作品索引與隱私頁也沿用此主題。後台仍使用原有樣式。
 
-## 互動
+## 捲動互動
 
-- 頂端固定選單，手機版可展開；Escape 關閉並將焦點返回按鈕。
-- 精選作品支援點擊、方向鍵、Home / End，具有 tab / tabpanel 語意。
-- 插圖輕微漂浮與搖擺；作品、研究階段切換有輕微彈跳。
-- 「暫停動畫」控制、系統減少動態效果偏好與分頁背景暫停。
-- 不執行 JavaScript 時，作品仍全部顯示，研究圖與連結仍可閱讀。
-- 既有圖片放大、研究階段切換、統計與公開內容篩選仍保留。
+| 效果              | 使用位置與行為                                                                               |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| Scroll-triggered  | 重點卡片、經歷與早期作品進入視窗後浮出；同排卡片間隔 130ms，手機逐張進場。                   |
+| Scroll-linked     | 首頁貼紙與章節符號隨捲動旋轉；位移直接對應捲動位置，停止捲動即停止。                         |
+| Parallax          | 首頁 SVG 拆為天空與書桌前景，天空移動速度較慢，形成景深。                                    |
+| Sticky            | 頂端選單、作品標籤及橫向展覽黏附在頂端；手機選單保留 Escape 關閉與焦點返回。                 |
+| Scroll Snap       | 精選作品使用原生 `scroll-snap-type: y mandatory`，一次翻一件作品；支援標籤、上下按鈕及鍵盤。 |
+| Horizontal Scroll | 早期作品黏住時，向下捲動直接帶動作品橫向位移；支援方向鍵、上一件／下一件與下一章入口。       |
+
+- 全程保留原生捲動，沒有攔截 wheel / touch 或強制鎖住頁面。
+- 當螢幕高度不足 760px，精選作品使用原有的標籤切換；橫向展覽高度不足以完整顯示時，改為可原生橫滑與吸附的作品列。
+- 「暫停動畫」或系統減少動態效果會關閉視差、捲動連動、整頁吸附與黏附橫向展覽，恢復可完整閱讀的卡片與標籤切換。
+- 背景分頁暫停；使用被動 scroll 事件與單次 requestAnimationFrame 更新，沒有持續追趕捲動位置的動畫迴圈。
+- 未執行 JavaScript 時，精選作品與早期作品全部顯示，研究圖與連結仍可閱讀。
+- 既有研究階段切換、圖片放大、統計與公開內容篩選仍保留。
+- 捲動程式在 `src/scripts/scroll-motion.ts`，樣式在 `src/styles/scroll-motion.css`；精選作品吸附在 `src/scripts/storybook.ts`。
 
 ## 出發倒數
 
@@ -46,10 +56,20 @@ node --import tsx --test tests/*.test.ts
 
 ## 預覽與驗證紀錄
 
-- `npm run build`：48 個 Astro 檔案，0 errors / warnings / hints，Vercel 建置完成。
+- `npm run build`：49 個 Astro 檔案，0 errors / warnings / hints，Vercel 建置完成。
 - `node --import tsx --test tests/*.test.ts`：10 項測試通過，涵蓋倒數、內容可見性與既有安全／資料庫檢查。
 - Chromium：檢查首頁 320、375、390、600、768、960、1440px，並檢查作品索引、研究／App／作品詳頁與隱私頁的手機、桌面版；均無水平溢出。
 - 檢查分頁鍵盤操作、手機選單與 Escape 焦點返回、研究圖片放大、動畫暫停、減少動態效果、未設定倒數與停用 JavaScript 時的內容可讀性。
+
+新增捲動互動的 46 項 Chromium 檢查全部通過，包含原生滑鼠滾輪吸附、模擬手機手勢、停止捲動時的位移穩定性、視差速度、分批進場、橫向黏附展覽、兩排標籤下的作品視窗、短螢幕替代操作與靜態降級；沒有 JavaScript 錯誤。
+
+捲動互動預覽：
+
+![精選作品整頁吸附](previews/project-snap.webp)
+
+![早期作品橫向展覽](previews/archive-horizontal.webp)
+
+![手機整頁吸附](previews/project-snap-mobile.webp)
 
 桌面與手機預覽（首頁上半部）：
 

@@ -6,7 +6,7 @@
 
 - Astro 7 + TypeScript，自訂響應式 CSS。
 - 日系繪本風、Google Fonts Huninn、原生 SVG 插圖與手機優先版面。
-- CSS / Anime.js 4：插圖輕動、作品與研究切換彈跳、章節進度與圖片放大；提供動畫暫停控制，尊重系統減少動態效果設定。
+- CSS / Anime.js 4：卡片依序進場、捲動連動、SVG 視差、黏附導覽、作品整頁吸附與垂直帶動橫向展覽；提供動畫暫停控制，尊重系統減少動態效果設定。
 - 公開頁面在建置時生成靜態 HTML，由 Vercel CDN 提供。
 - 後台與 API 使用 Vercel Functions（Node.js 24）。
 - Neon PostgreSQL 儲存訪問紀錄；本機可選用 PGlite。
@@ -55,6 +55,7 @@ Smoke checks 會在本機建立測試造訪紀錄，不會對正式站點執行�
 - `src/components/MediaGallery.astro`、`ResearchViewer.astro`：圖片展示與研究比較。
 - `src/scripts/gallery.ts`：滑動相簿、研究切換與圖片放大。
 - `src/styles/storybook.css`：前台繪本風主題與手機優先版面。
+- `src/scripts/scroll-motion.ts`、`src/styles/scroll-motion.css`：捲動連動、視差、黏附與橫向展覽。
 - `src/components/StoryIllustration.astro`：依內容題材繪製的 SVG 插圖。
 - `src/data/departure.ts`：下一段旅程的名稱與帶時區的出發日期；未設定時顯示準備中。
 - `src/styles/portfolio.css`：共用作品詳頁與圖片展示版面。
