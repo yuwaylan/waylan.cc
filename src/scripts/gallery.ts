@@ -1,6 +1,7 @@
 import { animate } from 'animejs';
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-const canAnimate = () => !reduce.matches;
+const canAnimate = () =>
+  !reduce.matches && document.documentElement.dataset.storyMotion !== 'paused';
 // Native horizontal scrolling keeps every image available without JavaScript.
 for (const gallery of document.querySelectorAll<HTMLElement>('[data-gallery]')) {
   const track = gallery.querySelector<HTMLElement>('.gallery-track')!;
@@ -55,7 +56,13 @@ for (const viewer of document.querySelectorAll<HTMLElement>('[data-research]')) 
       panel.hidden = i !== index;
     });
     if (motion && canAnimate())
-      animation = animate(panels[index], { opacity: [0.65, 1], duration: 240, ease: 'outQuad' });
+      animation = animate(panels[index], {
+        opacity: [0.65, 1],
+        translateY: [10, 0],
+        scale: [0.97, 1],
+        duration: 440,
+        ease: 'outBack',
+      });
   };
   controls.hidden = false;
   viewer.classList.add('is-enhanced');

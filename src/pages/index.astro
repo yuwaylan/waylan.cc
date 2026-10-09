@@ -1,17 +1,10 @@
 ---
 import Site from '../layouts/Site.astro';
-import MediaGallery from '../components/MediaGallery.astro';
 import ResearchViewer from '../components/ResearchViewer.astro';
-import LifeWindow from '../components/LifeWindow.astro';
-import { beScreens } from '../data/media';
 import { projects, publicProjects } from '../data/projects';
 
 const get = (slug: string) => projects.find((p) => p.slug === slug)!;
 const showBeWater = publicProjects.some((project) => project.slug === 'be-water');
-const skin = get('skin-texture');
-const ocr = get('ocr-search');
-const personality = get('personality-assessment');
-const certification = get('certification-system');
 const earlySlugs = ['ocean-defense', 'editorial-reader', 'chinese-checkers', 'cocktail'];
 const journey = [
   {
@@ -86,95 +79,150 @@ const jobs = [
     links: [],
   },
 ];
+
+import StoryIllustration from '../components/StoryIllustration.astro';
+import DepartureCountdown from '../components/DepartureCountdown.astro';
+const highlights = [
+  {
+    kind: 'code' as const,
+    title: '把想法做成產品',
+    text: '從需求、Web 與 App 開發，到部署與維運，串起產品的每一段路。',
+    tag: '全端開發',
+    color: 'blue',
+  },
+  {
+    kind: 'research' as const,
+    title: '用研究理解問題',
+    text: '從影像處理、OCR 到電腦視覺，讓模型走進實際的使用情境。',
+    tag: 'AI 與研究',
+    color: 'pink',
+  },
+  {
+    kind: 'camera' as const,
+    title: '保留一點好奇心',
+    text: '互動裝置、攝影與影像創作，是我認識世界的另一種方式。',
+    tag: '互動與影像',
+    color: 'yellow',
+  },
+];
+const selected = [
+  'be-water',
+  'skin-texture',
+  'personality-assessment',
+  'ocr-search',
+  'nlp-assistant',
+].flatMap((slug) => publicProjects.filter((p) => p.slug === slug));
+const illustrationFor = (slug: string) =>
+  slug === 'skin-texture' || slug === 'ocr-search'
+    ? ('research' as const)
+    : slug === 'personality-assessment' || slug === 'be-water'
+      ? ('app' as const)
+      : ('code' as const);
 ---
 
 <Site home>
-  <section id="intro" class="cloud-hero" aria-label="首頁視覺">
-    <img
-      src="/images/portfolio-clouds-v2.png"
-      alt=""
-      width="2161"
-      height="728"
-      fetchpriority="high"
-      aria-hidden="true"
-    />
-    <div class="cloud-notice" aria-hidden="true">
-      <span class="cloud-notice-title">SYSTEM MESSAGE</span>
-      <span class="cloud-notice-copy">Hello, curious human.</span>
+  <section id="intro" class="storybook-hero story-shell" aria-labelledby="identity-title">
+    <div class="hero-copy">
+      <p class="welcome-label">
+        <span aria-hidden="true">✳</span> 歡迎來到我的小小世界
+      </p>
+      <h1 id="identity-title">
+        你好，我是
+        <br />
+        <span class="name-highlight">余程漢</span>
+        <span class="hello-dot" aria-hidden="true">
+          。
+        </span>
+      </h1>
+      <p class="hero-english">Cheng-Han Yu · 全端工程師</p>
+      <p class="hero-description">
+        從一個想法，到真正被使用。
+        <br />
+        寫程式、做研究，也收集生活裡的小小靈感。
+      </p>
+      <div class="hero-actions">
+        <a class="story-button pink" href="#work">
+          翻開我的作品 <span aria-hidden="true">↗</span>
+        </a>
+        <a class="story-button" href="#about">
+          認識我 <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+      <div class="hero-current">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>{showBeWater ? 'Be水水共同創辦人 / CTO · ' : ''}島宇系統工程師</span>
+      </div>
+    </div>
+    <div class="hero-picture">
+      <span class="picture-sticker">讓好奇心，帶路。</span>
+      <StoryIllustration kind="desk" />
+      <p class="picture-caption">一點程式，一點想像，還有日常。</p>
     </div>
   </section>
 
-  <section class="identity section-shell" aria-labelledby="identity-title">
-    <span class="crop-mark crop-mark-top" aria-hidden="true"></span>
-    <p class="section-label">Full-stack Engineer</p>
-    <h1 id="identity-title">余程漢</h1>
-    <p class="english-name">Cheng-Han Yu</p>
-    <p class="intro-role">
-      從需求、開發到正式運行，
-      <br class="mobile-break" />
-      讓產品真正被使用。
-    </p>
-    <p class="intro-now">
-      {showBeWater && (
-        <>
-          <a href="/work/be-water/">Be水水共同創辦人 / CTO</a>
-          <span aria-hidden="true">·</span>
-        </>
-      )}
-      <a href="#experience">島宇系統工程師</a>
-    </p>
-    <div class="intro-links">
-      <a class="underlined" href="#work">
-        看代表作品 ↓
-      </a>
-      <a class="underlined" href="#about">
-        認識我的經歷 ↓
-      </a>
-    </div>
-    <span class="crop-mark crop-mark-bottom" aria-hidden="true"></span>
-  </section>
+  <div class="story-shell departure-wrap">
+    <DepartureCountdown />
+  </div>
 
   <section
     id="about"
     data-nav-anchor="intro"
-    class="about-section section-shell"
+    class="story-section story-shell"
     aria-labelledby="about-title"
   >
-    <div class="bio">
-      <figure class="bio-portrait image-clip">
-        <img
-          src="/images/portrait.webp"
-          alt="余程漢手持 Arduino 與相機"
-          width="1200"
-          height="1200"
-          loading="lazy"
-        />
-      </figure>
-      <div class="bio-copy">
-        <p class="section-label">About</p>
-        <h2 id="about-title">從互動與影像，走進產品與系統。</h2>
-        <div class="intro-summary">
-          <p>
-            大學時做過互動裝置、Android App、遊戲與攝影，後來投入跨平台應用、後端與電腦視覺研究。
-            {showBeWater
-              ? '現在，我把這些經驗帶進 Be水水的產品開發，以及數位學習平台的系統工作，持續在實際使用情境中解決問題。'
-              : '現在，我把這些經驗帶進數位學習平台的系統工作，持續在實際使用情境中解決問題。'}
-          </p>
-        </div>
+    <header class="story-heading">
+      <div>
+        <p class="little-label">01 / 關於我</p>
+        <h2 id="about-title">
+          我的日常，<span>也是我的專長。</span>
+        </h2>
+      </div>
+      <span class="heading-doodle" aria-hidden="true">
+        ✳
+      </span>
+    </header>
+    <p class="section-introduction">
+      從互動與影像出發，走進產品與系統。我喜歡把複雜的問題拆開，做成能被好好使用的東西。
+    </p>
+    <div class="highlight-grid">
+      {highlights.map((item) => (
+        <article class:list={['highlight-card', item.color]} data-reveal>
+          <span class="card-tag">{item.tag}</span>
+          <StoryIllustration kind={item.kind} />
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+    <div class="about-note">
+      <img
+        src="/images/portrait.webp"
+        alt="余程漢手持 Arduino 與相機"
+        width="1200"
+        height="1200"
+        loading="lazy"
+      />
+      <div>
+        <h3>從互動與影像，走進產品與系統。</h3>
+        <p>
+          大學時做過互動裝置、Android
+          App、遊戲與攝影，後來投入跨平台應用、後端與電腦視覺研究。現在，我把這些經驗帶進
+          {showBeWater ? ' Be水水的產品開發，以及' : ''}
+          數位學習平台的系統工作，持續在實際使用情境中解決問題。
+        </p>
       </div>
     </div>
-    <div class="journey" aria-labelledby="journey-title">
-      <h3 id="journey-title" class="journey-heading">
-        我怎麼走到現在
-      </h3>
-      <ol class="journey-list">
-        {journey.map((step) => (
+    <div class="story-journey">
+      <h3>一路走來的小腳印</h3>
+      <ol>
+        {journey.map((step, i) => (
           <li>
-            <p class="journey-period">{step.period}</p>
+            <span class="journey-number" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <p class="little-label">{step.period}</p>
             <h4>
-              <a href={step.href}>
-                {step.title} <span aria-hidden="true">↗</span>
-              </a>
+              <a href={step.href}>{step.title} ↗</a>
             </h4>
             <p>{step.description}</p>
           </li>
@@ -183,199 +231,119 @@ const jobs = [
     </div>
   </section>
 
-  <div class="project-river" id={showBeWater ? undefined : 'work'}>
-    {showBeWater && (
-      <section
-        id="work"
-        class="project-block featured-product-block section-shell"
-        aria-labelledby="be-water-title"
-      >
-        <header class="project-heading">
-          <p class="section-label">Selected work · 01</p>
-          <h2 id="be-water-title">Be水水</h2>
-          <p>美業預約與顧客管理平台</p>
-        </header>
-        <div class="product-story">
-          <div class="product-copy" data-reveal>
-            <div class="product-intro">
-              <p class="project-byline">共同創辦人 / CTO · 2026–至今</p>
-              <h3>顧客找服務，技師安排每天的工作。</h3>
-            </div>
-            <div class="product-details">
-              <p>
-                Be水水提供 App
-                與網頁服務。顧客可以查看附近工作室、選擇服務與技師；技師則透過行事曆安排預約，整理顧客標籤與服務紀錄。
-              </p>
-              <p>
-                我負責技術架構與產品開發，建置 API、網頁與跨平台 App，並處理部署、備份與版本發布。
-              </p>
-              <p class="tech-line">
-                Laravel · Vue.js · Flutter
-                <br />
-                MySQL · Redis
-              </p>
-              <div class="project-links">
-                <a class="inline-link" href="/work/be-water/">
-                  閱讀產品與開發內容 ↗
-                </a>
-                <a
-                  class="inline-link"
-                  href="https://besuisui.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  網頁版 ↗
-                </a>
-                <a
-                  class="inline-link"
-                  href="https://status.besuisui.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  服務狀態 ↗
-                </a>
-              </div>
-            </div>
-          </div>
-          <MediaGallery id="be-home" items={beScreens.slice(0, 2)} variant="showcase" />
-        </div>
-      </section>
-    )}
-
-    <section
-      id="research"
-      class="project-block research-block section-shell"
-      aria-labelledby="research-title"
-    >
-      <header class="section-heading">
-        <p class="section-label">Selected work · {showBeWater ? '02' : '01'}</p>
-        <h2 id="research-title">研究與發表</h2>
-      </header>
-      <article class="research-feature">
-        <div class="research-copy" data-reveal>
-          <p class="project-byline">碩士研究 · 2023–2024</p>
-          <h3>
-            <a href="/work/skin-texture/">
-              微觀皮膚影像的
-              <br />
-              紋理輪廓偵測
-            </a>
-          </h3>
-          <p>{skin.summary}</p>
-          <p>
-            研究工作包含資料標註、影像增強、模型訓練與結果比較。可切換查看同一張影像在不同處理階段的結果。
-          </p>
-          <p class="tech-line">YOLOv8 · 影像處理 · 輪廓偵測</p>
-          <div class="project-links">
-            <a class="inline-link" href="/work/skin-texture/">
-              查看研究內容 ↗
-            </a>
-            <a
-              class="inline-link"
-              href="https://hdl.handle.net/11296/vyv524"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              閱讀碩士論文 ↗
-            </a>
-          </div>
-        </div>
-        <ResearchViewer />
-      </article>
-      <article class="publication-row" data-reveal>
-        <p class="project-byline">研討會發表 · 2023</p>
-        <div>
-          <h3>
-            <a href="/work/ocr-search/">以影像辨識輔助文字搜尋 ↗</a>
-          </h3>
-          <p>結合影像處理與 OCR，將文字辨識整合至行動應用，輔助文字資料搜尋。</p>
-          <p class="citation">{ocr.citation}</p>
-        </div>
-      </article>
-    </section>
-
-    <section
-      id="other"
-      data-nav-anchor="work"
-      class="project-block other-block section-shell"
-      aria-labelledby="other-title"
-    >
-      <header class="section-heading">
-        <p class="section-label">Other projects</p>
-        <h2 id="other-title">其他開發專案</h2>
-      </header>
-      <article class="personality-feature" data-reveal>
-        <figure>
-          <a
-            href="/images/personality-app.webp"
-            data-lightbox
-            data-caption="大數據人格特質分析 App，取自當時的上架畫面。"
-            aria-label="放大人格特質 App 畫面"
-          >
-            <img
-              src="/images/personality-app.webp"
-              alt="大數據人格特質分析 App 的填答畫面"
-              width="273"
-              height="450"
-              loading="lazy"
-            />
-          </a>
-          <figcaption>當時上架畫面中的 App 介面</figcaption>
-        </figure>
-        <div>
-          <p class="project-byline">跨平台 App 與後端開發 · 2020–2021</p>
-          <h3>
-            <a href="/work/personality-assessment/">大數據人格特質分析</a>
-          </h3>
-          <p>{personality.summary}</p>
-          <p class="grant">
-            國科會計畫<span>{personality.grant}</span>
-          </p>
-          <a class="inline-link" href="/work/personality-assessment/">
-            查看開發內容 ↗
-          </a>
-        </div>
-      </article>
-      <div class="compact-projects secondary-projects">
-        <article class="compact-project" data-reveal>
-          <div>
-            <h3>
-              <a href={certification.href} target="_blank" rel="noopener noreferrer">
-                {certification.title} ↗
-              </a>
-            </h3>
-            <p>{certification.summary}</p>
-            <p class="source-note">連結前往現行網站；此處記錄的是當年的維運工作。</p>
-          </div>
-          <span class="project-year">2020 · Django / MySQL</span>
-        </article>
-        <article class="compact-project" data-reveal>
-          <div>
-            <h3>
-              <a href="/work/nlp-assistant/">自然語言處理聊天機器人 ↗</a>
-            </h3>
-            <p>{get('nlp-assistant').summary}</p>
-          </div>
-          <span class="project-year">2022–2023</span>
-        </article>
+  <section id="work" class="story-section story-shell" aria-labelledby="work-title">
+    <header class="story-heading">
+      <div>
+        <p class="little-label">02 / 精選作品</p>
+        <h2 id="work-title">
+          把想法，<span>變成看得見的成果。</span>
+        </h2>
       </div>
-    </section>
-  </div>
-
-  <section id="experience" class="experience section-shell" aria-labelledby="experience-title">
-    <header class="section-heading">
-      <p class="section-label">Experience</p>
-      <h2 id="experience-title">工作經歷</h2>
+      <span class="heading-doodle" aria-hidden="true">
+        ↗
+      </span>
     </header>
-    <ol class="job-list">
-      {jobs.map((job) => (
-        <li class="job" data-reveal>
-          <p class="job-period">{job.period}</p>
-          <div class="job-content">
-            <div class="job-heading">
-              <h3>{job.company}</h3>
-              <p>{job.role}</p>
+    <p class="section-introduction">每個作品都是一段探索。選一張標籤，翻開它的故事。</p>
+    <div class="project-notebook" data-project-tabs>
+      <div class="project-tabs" data-project-controls hidden aria-label="精選作品">
+        {selected.map((p, i) => (
+          <button type="button" id={`project-tab-${i}`} aria-controls={`project-panel-${i}`}>
+            {p.slug === 'skin-texture'
+              ? '皮膚影像研究'
+              : p.slug === 'ocr-search'
+                ? 'OCR 文字搜尋'
+                : p.slug === 'personality-assessment'
+                  ? '人格特質 App'
+                  : p.slug === 'nlp-assistant'
+                    ? '聊天機器人'
+                    : p.title}
+          </button>
+        ))}
+      </div>
+      <div class="project-pages">
+        {selected.map((p, i) => (
+          <article class="project-page" id={`project-panel-${i}`} data-project-panel>
+            <div class="project-art">
+              <StoryIllustration kind={illustrationFor(p.slug)} />
+              <span class="art-caption">{p.category}</span>
+              <span class="page-number">作品 / {String(i + 1).padStart(2, '0')}</span>
             </div>
+            <div class="project-page-copy">
+              <p class="little-label">
+                {p.category} · {p.year.replaceAll(' — ', '–')}
+              </p>
+              <h3>{p.subtitle}</h3>
+              <p>{p.summary}</p>
+              <p class="project-role">我的角色：{p.role}</p>
+              <ul class="tech-tags" aria-label="使用技術">
+                {p.stack.map((tech) => (
+                  <li>{tech}</li>
+                ))}
+              </ul>
+              <a class="story-button yellow" href={`/work/${p.slug}/`}>
+                閱讀作品故事 <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="research" class="story-section story-shell" aria-labelledby="research-title">
+    <header class="story-heading">
+      <div>
+        <p class="little-label">03 / 研究與發表</p>
+        <h2 id="research-title">
+          仔細觀察，<span>就會有新的發現。</span>
+        </h2>
+      </div>
+      <StoryIllustration kind="research" />
+    </header>
+    <div class="research-note">
+      <div>
+        <span class="card-tag pink">碩士研究 · 2023–2024</span>
+        <h3>
+          微觀皮膚影像的
+          <br />
+          紋理輪廓偵測
+        </h3>
+        <p>{get('skin-texture').summary}</p>
+        <p class="research-instruction">點選研究階段，看見從原始影像到輪廓疊圖的變化。</p>
+        <a class="story-button" href="/work/skin-texture/">
+          閱讀研究內容 ↗
+        </a>
+      </div>
+      <ResearchViewer id="skin-home" />
+    </div>
+    <article class="publication-note">
+      <span class="card-tag green">研討會發表 · 2023</span>
+      <h3>
+        <a href="/work/ocr-search/">視覺辨識輔助文字搜尋 ↗</a>
+      </h3>
+      <p>{get('ocr-search').citation}</p>
+    </article>
+  </section>
+
+  <section id="experience" class="story-section story-shell" aria-labelledby="experience-title">
+    <header class="story-heading">
+      <div>
+        <p class="little-label">04 / 工作經歷</p>
+        <h2 id="experience-title">
+          一起做過的事，<span>一路累積的經驗。</span>
+        </h2>
+      </div>
+      <StoryIllustration kind="code" />
+    </header>
+    <ol class="story-jobs">
+      {jobs.map((job) => (
+        <li class="story-job" data-reveal>
+          <div class="job-stamp">
+            <p>{job.period}</p>
+            <span>{job.role}</span>
+          </div>
+          <div>
+            <h3>{job.company}</h3>
             <ul>
               {job.items.map((item) => (
                 <li>{item}</li>
@@ -397,29 +365,41 @@ const jobs = [
         </li>
       ))}
     </ol>
+    <article id="other" class="publication-note">
+      <span class="card-tag blue">系統維運 · 2020</span>
+      <h3>{get('certification-system').title}</h3>
+      <p>{get('certification-system').summary}</p>
+      <a class="inline-link" href="https://icdesign.tw/" target="_blank" rel="noopener noreferrer">
+        前往網站 ↗
+      </a>
+    </article>
   </section>
 
-  <section id="early-work" class="archive-section section-shell" aria-labelledby="archive-title">
-    <div class="heading-with-link">
+  <section id="early-work" class="story-section story-shell" aria-labelledby="archive-title">
+    <header class="story-heading">
       <div>
-        <p class="section-label">Archive</p>
-        <h2 id="archive-title">早期作品</h2>
-        <p class="section-subtitle">2016–2019</p>
+        <p class="little-label">05 / 早期作品</p>
+        <h2 id="archive-title">
+          好奇心，<span>從這裡開始。</span>
+        </h2>
       </div>
-      <a class="inline-link" href="/archive/">
-        全部早期作品 ↗
+      <a class="story-button" href="/archive/">
+        全部作品 ↗
       </a>
-    </div>
-    <p class="archive-context">
-      大學時，我用 App 回應家人的需求，也透過互動裝置、遊戲與短片嘗試不同的表達方式。
-      這些作品保留了我開始做東西時的好奇心，以及軟體之外的興趣。
+    </header>
+    <p class="section-introduction">
+      2016–2019，為家人做的 App、和夥伴完成的展覽，以及鏡頭後的創作。
     </p>
-    <div class="early-grid">
+    <div class="story-archive">
       {earlySlugs.map((slug) => {
         const p = get(slug);
         return (
-          <article class="early-project" data-reveal>
-            <a class="image-clip" href={`/work/${p.slug}/`} aria-label={`閱讀${p.title}專案`}>
+          <article class="archive-card" data-reveal>
+            <a
+              class="archive-card-image"
+              href={`/work/${p.slug}/`}
+              aria-label={`閱讀${p.title}專案`}
+            >
               <img
                 src={`/images/${p.image}.webp`}
                 alt={`${p.title}作品畫面`}
@@ -428,37 +408,40 @@ const jobs = [
                 loading="lazy"
               />
             </a>
-            <h3>
-              <a href={`/work/${p.slug}/`}>{p.title} ↗</a>
-            </h3>
-            <p>{p.summary}</p>
+            <div>
+              <p class="little-label">{p.category}</p>
+              <h3>
+                <a href={`/work/${p.slug}/`}>{p.title} ↗</a>
+              </h3>
+              <p>{p.summary}</p>
+            </div>
           </article>
         );
       })}
     </div>
   </section>
 
-  <section id="education" class="education-section section-shell" aria-labelledby="education-title">
-    <header class="section-heading">
-      <p class="section-label">Education</p>
-      <h2 id="education-title">學歷與證照</h2>
-    </header>
-    <div class="qualifications">
-      <div class="education-list">
-        <article>
-          <h3>元智大學 · 資訊傳播學系 碩士</h3>
-          <p class="project-year">2021.09–2024.01</p>
-        </article>
-        <article>
-          <h3>元智大學 · 資訊傳播學系 學士</h3>
-          <p class="project-year">2016.09–2021.06</p>
-          <p>輔系：企業管理學系</p>
-        </article>
+  <section id="education" class="story-section story-shell" aria-labelledby="education-title">
+    <header class="story-heading">
+      <div>
+        <p class="little-label">06 / 學歷與證照</p>
+        <h2 id="education-title">
+          學習，是一段<span>持續的旅程。</span>
+        </h2>
       </div>
-      <div class="credentials">
-        <h3>證照</h3>
-        <p>ISO 27001</p>
-        <h3>教學與獎項</h3>
+      <StoryIllustration kind="book" />
+    </header>
+    <div class="learning-grid">
+      <div class="learning-card blue">
+        <span class="card-tag">學歷</span>
+        <h3>元智大學 · 資訊傳播學系</h3>
+        <p>碩士 · 2021.09–2024.01</p>
+        <p>學士 · 2016.09–2021.06</p>
+        <p>輔系：企業管理學系</p>
+      </div>
+      <div class="learning-card green">
+        <span class="card-tag">證照與教學</span>
+        <h3>ISO 27001</h3>
         <ul>
           <li>元智大學資訊傳播學系活動講師</li>
           <li>多門課程教學助理</li>
@@ -468,48 +451,45 @@ const jobs = [
     </div>
   </section>
 
-  <section id="contact" class="contact-section section-shell" aria-labelledby="contact-title">
-    <div class="contact-content">
+  <section id="contact" class="story-section story-shell" aria-labelledby="contact-title">
+    <div class="contact-postcard">
+      <StoryIllustration kind="mail" />
       <div>
-        <p class="section-label">Elsewhere</p>
-        <h2 id="contact-title">交流與更多作品</h2>
-        <p class="contact-copy">
-          我的工作涵蓋產品開發、Web / App 與電腦視覺。歡迎透過 Email 聯絡，更多程式與專案則收錄在
-          GitHub。
+        <p class="little-label">07 / 找到我</p>
+        <h2 id="contact-title">
+          有個想法？
+          <br />
+          我們聊聊吧。
+        </h2>
+        <p>
+          關於產品開發、Web / App、電腦視覺，
+          <br class="desktop-only" />
+          或是一個值得分享的小靈感。
         </p>
-      </div>
-      <div class="contact-links">
-        <a class="contact-link" href="mailto:waylanyu@gmail.com">
-          <span>Email</span>
-          <span class="contact-account">
-            waylanyu@gmail.com <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-        <a
-          class="contact-link"
-          href="https://github.com/yuwaylan"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span>GitHub</span>
-          <span class="contact-account">
-            yuwaylan <span aria-hidden="true">↗</span>
-          </span>
+        <div class="postcard-links">
+          <a class="story-button" href="mailto:waylanyu@gmail.com">
+            寫封信給我 ↗
+          </a>
+          <a
+            class="story-button"
+            href="https://github.com/yuwaylan"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            逛逛 GitHub ↗
+          </a>
+        </div>
+        <a class="email-address" href="mailto:waylanyu@gmail.com">
+          waylanyu@gmail.com
         </a>
       </div>
+      <span class="postcard-stamp" aria-hidden="true">
+        HELLO
+        <br />
+        FROM
+        <br />
+        WAYLAN
+      </span>
     </div>
   </section>
-
-  <aside class="side-note section-shell" aria-labelledby="side-note-title">
-    <div>
-      <p class="section-label">Side note</p>
-      <h2 id="side-note-title">
-        簡單規則也會長出
-        <br />
-        意料之外的形狀。
-      </h2>
-      <p class="side-note-caption">Conway’s Game of Life</p>
-    </div>
-    <LifeWindow />
-  </aside>
 </Site>

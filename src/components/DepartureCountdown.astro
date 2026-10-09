@@ -1,0 +1,42 @@
+---
+import { departure } from '../data/departure';
+import StoryIllustration from './StoryIllustration.astro';
+import { getCountdown } from '../lib/countdown';
+const configured = getCountdown(departure.at) !== null;
+---
+
+<aside
+  class="departure-card"
+  aria-labelledby="departure-title"
+  data-countdown
+  data-departure-at={departure.at || ''}
+>
+  <StoryIllustration kind="travel" />
+  <div class="departure-copy">
+    <p class="little-label">下一段小旅程</p>
+    <h2 id="departure-title">{departure.title}</h2>
+    <p data-countdown-status>{configured ? '出發倒數' : '帶著好奇心，慢慢收集沿途的風景。'}</p>
+    {configured && (
+      <time datetime={departure.at!}>
+        {new Date(departure.at!).toLocaleString('zh-TW', {
+          timeZone: 'Asia/Taipei',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        })}
+        （臺北時間）
+      </time>
+    )}
+    <div class="countdown-digits" data-countdown-digits hidden aria-label="距離出發的剩餘時間">
+      {['天', '時', '分', '秒'].map((unit, i) => (
+        <span>
+          <strong data-countdown-unit={i}>00</strong>
+          <small>{unit}</small>
+        </span>
+      ))}
+    </div>
+  </div>
+</aside>

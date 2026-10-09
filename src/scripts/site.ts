@@ -1,5 +1,6 @@
 import './gallery';
 import './experiments';
+import './storybook';
 
 const menu = document.querySelector<HTMLButtonElement>('.menu-toggle');
 const nav = document.querySelector<HTMLElement>('#navigation');

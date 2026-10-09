@@ -1,0 +1,170 @@
+---
+export type Illustration =
+  'desk' | 'code' | 'research' | 'app' | 'camera' | 'book' | 'mail' | 'travel';
+interface Props {
+  kind?: Illustration;
+  class?: string;
+}
+const { kind = 'desk', class: className = '' } = Astro.props;
+---
+
+<svg
+  class:list={['story-illustration', className]}
+  viewBox={kind === 'desk' ? '0 0 600 440' : '0 0 180 150'}
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  focusable="false"
+>
+  <g stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    {kind === 'desk' ? (
+      <>
+        <path
+          d="M65 333C36 245 50 99 137 60C240 14 447 36 512 118C565 188 563 293 512 351Z"
+          fill="#EAF3F5"
+          stroke="none"
+        />
+        <g class="illustration-float">
+          <path
+            d="M89 94C86 77 106 67 118 77C122 53 159 57 162 80C182 72 196 97 179 108H99C91 108 86 100 89 94Z"
+            fill="#FFFCF6"
+          />
+        </g>
+        <g class="illustration-float illustration-delay">
+          <path
+            d="M414 116C410 104 423 94 434 98C439 77 470 79 474 100C491 94 505 115 490 126H425C419 126 413 122 414 116Z"
+            fill="#FFFCF6"
+          />
+        </g>
+        <g class="illustration-sway">
+          <circle cx="391" cy="68" r="27" fill="#F6D27A" />
+          <path d="M391 29V21M391 115V107M430 68H438M344 68H336M420 39L426 33M362 97L356 103M420 97L426 103M362 39L356 33" />
+          <path d="M382 66V70M400 66V70M385 79Q391 84 397 79" />
+        </g>
+        <path d="M55 360H546M88 388H130M474 389H505" />
+        <path d="M149 319V402M450 319V402" stroke-width="10" />
+        <rect x="122" y="299" width="352" height="24" rx="10" fill="#F6D27A" />
+        <path
+          d="M209 299V273C209 237 230 209 264 209C299 209 321 237 321 273V299Z"
+          fill="#B9DAA5"
+        />
+        <path d="M234 292L220 265M295 292L312 265" />
+        <path
+          d="M215 159C214 128 238 112 265 114C294 114 312 134 313 159V182H215Z"
+          fill="#3E3A39"
+        />
+        <path
+          d="M223 159C238 163 254 149 261 139C274 152 293 156 306 154V180C306 208 290 225 264 225C238 225 222 208 222 181Z"
+          fill="#FFFCF6"
+        />
+        <path d="M213 170C199 165 201 187 222 188M307 171C323 167 323 187 306 188" fill="#FFFCF6" />
+        <path d="M242 177V181M283 177V181M252 197Q264 207 275 197" />
+        <path d="M230 190H242M286 190H297" stroke="#F2A497" stroke-width="6" />
+        <g class="illustration-float illustration-delay">
+          <path d="M177 144L157 139M173 124L164 109M195 116L195 99" />
+        </g>
+        <rect x="249" y="236" width="144" height="67" rx="9" fill="#A8D3E6" />
+        <path d="M264 247H377V286H264Z" fill="#FFFCF6" />
+        <path d="M294 258L285 266L294 274M349 258L358 266L349 274M326 255L316 278" />
+        <rect x="239" y="295" width="166" height="9" rx="4" fill="#A8D3E6" />
+        <g class="illustration-sway">
+          <path
+            d="M432 277V254C408 254 409 225 410 222C433 222 435 240 432 250C431 228 450 216 460 216C462 237 454 250 433 255"
+            fill="#B9DAA5"
+          />
+          <path d="M413 272H452L448 299H419Z" fill="#F2A497" />
+        </g>
+        <path d="M153 273H180V299H153Z" fill="#FFFCF6" />
+        <path d="M180 279C199 275 199 296 180 292" />
+        <path
+          d="M95 348C82 320 91 300 112 299L125 280L137 299L160 283L165 313C180 330 178 348 166 359H108Z"
+          fill="#F2A497"
+        />
+        <path d="M110 321V325M148 321V325M124 333L129 337L134 333M129 337V341M105 335H90M152 335H168" />
+        <path d="M104 358C77 365 66 343 78 332" />
+        <path d="M489 330V357M479 343H500" stroke="#B9DAA5" stroke-width="7" />
+        <circle cx="489" cy="323" r="11" fill="#F6D27A" />
+        <path d="M180 385L201 373L227 384L206 397Z" fill="#FFFCF6" />
+        <path d="M201 373V390M201 390L227 384" />
+      </>
+    ) : kind === 'code' ? (
+      <>
+        <rect x="27" y="25" width="126" height="86" rx="13" fill="#A8D3E6" />
+        <path d="M38 38H142V98H38Z" fill="#FFFCF6" />
+        <path d="M65 53L52 68L65 81M115 53L128 68L115 81M99 49L83 86" />
+        <path d="M18 111H162L155 125H25Z" fill="#A8D3E6" />
+        <g class="illustration-float">
+          <path d="M19 17V5M13 11H25M160 39V27M154 33H166" />
+        </g>
+      </>
+    ) : kind === 'research' ? (
+      <>
+        <path d="M67 24L89 33L68 82L46 73Z" fill="#A8D3E6" />
+        <path d="M83 32L90 17L77 11L70 25" fill="#F6D27A" />
+        <path d="M54 73L48 88L60 93L67 79" fill="#F6D27A" />
+        <path d="M93 42C150 51 140 112 89 117" stroke-width="10" />
+        <path d="M29 95H95M58 113V131M31 132H134" stroke-width="7" />
+        <path d="M92 118V131" />
+        <g class="illustration-float">
+          <circle cx="143" cy="38" r="19" fill="#F2A497" />
+          <path d="M135 37V40M150 37V40M139 47Q144 51 147 47" />
+        </g>
+      </>
+    ) : kind === 'app' ? (
+      <>
+        <rect x="52" y="13" width="77" height="125" rx="17" fill="#F2A497" />
+        <rect x="61" y="30" width="59" height="88" rx="6" fill="#FFFCF6" />
+        <path d="M81 22H101M86 127H96" />
+        <rect x="71" y="43" width="38" height="31" rx="7" fill="#B9DAA5" />
+        <path d="M77 58L86 65L103 50M74 88H107M74 99H98" />
+        <g class="illustration-float">
+          <path d="M31 44V30M24 37H38M149 102V88M142 95H156" />
+        </g>
+      </>
+    ) : kind === 'camera' ? (
+      <>
+        <path d="M48 42L56 28H91L100 42" fill="#F6D27A" />
+        <rect x="22" y="42" width="138" height="84" rx="16" fill="#F6D27A" />
+        <circle cx="90" cy="85" r="29" fill="#FFFCF6" />
+        <circle cx="90" cy="85" r="18" fill="#A8D3E6" />
+        <path d="M82 73Q96 67 102 81" />
+        <rect x="127" y="54" width="20" height="11" rx="3" fill="#FFFCF6" />
+        <g class="illustration-float">
+          <path d="M138 24V10M131 17H145M23 30L14 21" />
+        </g>
+      </>
+    ) : kind === 'book' ? (
+      <>
+        <path
+          d="M90 35C66 21 42 24 24 34V119C46 108 66 111 90 125C114 111 136 108 156 119V34C132 23 110 24 90 35Z"
+          fill="#FFFCF6"
+        />
+        <path d="M90 36V125M38 50Q60 43 75 53M38 65Q60 58 75 68M105 50Q127 43 142 53M105 65Q127 58 142 68" />
+        <path d="M115 26V91L124 85L133 91V26" fill="#F2A497" />
+        <g class="illustration-float">
+          <path d="M53 20V6M46 13H60" />
+        </g>
+      </>
+    ) : kind === 'mail' ? (
+      <>
+        <rect x="25" y="43" width="132" height="86" rx="13" fill="#A8D3E6" />
+        <path d="M27 48L90 92L154 48M29 123L71 84M152 124L111 83" />
+        <g class="illustration-float">
+          <path d="M90 39C55 19 76 1 90 18C105 0 124 22 90 39Z" fill="#F2A497" />
+        </g>
+      </>
+    ) : (
+      <>
+        <path d="M65 35V24C65 12 115 12 115 24V35" />
+        <rect x="39" y="35" width="102" height="99" rx="17" fill="#F6D27A" />
+        <path d="M57 40V126M123 40V126M59 135V142M120 135V142" />
+        <rect x="73" y="55" width="34" height="38" rx="8" fill="#B9DAA5" />
+        <path d="M81 67H98M81 77H91" />
+        <g class="illustration-float">
+          <path d="M134 16L168 11L157 31L150 22L134 16Z" fill="#A8D3E6" />
+          <path d="M150 22L168 11" />
+        </g>
+      </>
+    )}
+  </g>
+</svg>

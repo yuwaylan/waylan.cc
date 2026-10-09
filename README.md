@@ -5,7 +5,8 @@
 ## 技術架構
 
 - Astro 7 + TypeScript，自訂響應式 CSS。
-- Anime.js 4：架構連線、滾動視差、章節進度與圖片切換；預設啟用且無頁面開關，尊重系統減少動態效果設定。
+- 日系繪本風、Google Fonts Huninn、原生 SVG 插圖與手機優先版面。
+- CSS / Anime.js 4：插圖輕動、作品與研究切換彈跳、章節進度與圖片放大；提供動畫暫停控制，尊重系統減少動態效果設定。
 - 公開頁面在建置時生成靜態 HTML，由 Vercel CDN 提供。
 - 後台與 API 使用 Vercel Functions（Node.js 24）。
 - Neon PostgreSQL 儲存訪問紀錄；本機可選用 PGlite。
@@ -53,7 +54,11 @@ Smoke checks 會在本機建立測試造訪紀錄，不會對正式站點執行�
 - `src/data/media.ts`：App 與研究圖的標題、尺寸和說明。
 - `src/components/MediaGallery.astro`、`ResearchViewer.astro`：圖片展示與研究比較。
 - `src/scripts/gallery.ts`：滑動相簿、研究切換與圖片放大。
-- `src/styles/portfolio.css`：作品版面與滾動效果。
+- `src/styles/storybook.css`：前台繪本風主題與手機優先版面。
+- `src/components/StoryIllustration.astro`：依內容題材繪製的 SVG 插圖。
+- `src/data/departure.ts`：下一段旅程的名稱與帶時區的出發日期；未設定時顯示準備中。
+- `src/styles/portfolio.css`：共用作品詳頁與圖片展示版面。
+- `docs/NEW_LOOK.md`：視覺、互動與倒數維護說明。
 - `docs/PORTFOLIO.md`：內容順序、來源及圖片處理紀錄。
 - `src/components/Architecture.astro`：Be水水系統架構示意。
 - `src/scripts/site.ts`：互動、導覽與訪問統計呼叫。
