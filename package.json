@@ -23,7 +23,7 @@
     "@fontsource/ibm-plex-mono": "latest",
     "@neondatabase/serverless": "^1.0.2",
     "animejs": "^4.5.0",
-    "astro": "^7.3.2"
+    "astro": "^7.4.2"
   },
   "devDependencies": {
     "@astrojs/check": "latest",
